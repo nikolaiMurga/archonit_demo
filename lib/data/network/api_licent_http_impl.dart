@@ -11,9 +11,9 @@ class ApiClientHttpImpl implements ApiClient {
 
   // GET
   @override
-  Future<http.Response> get({required String endpoint}) async {
+  Future<http.Response> get({required String url}) async {
     final response = await http.get(
-      Uri.parse(endpoint),
+      Uri.parse(url),
       headers: _params.getHeaders(token: dotenv.env['API_TOKEN']),
     );
     return response;
