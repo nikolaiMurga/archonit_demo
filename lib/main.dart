@@ -1,3 +1,7 @@
 import 'package:flutter/material.dart';
 
-void main() {}
+import 'archonit_demo_app.dart';
+
+void main() {
+  runApp(const ArchonitDemoApp());
+}
