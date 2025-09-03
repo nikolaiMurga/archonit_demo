@@ -6,20 +6,11 @@ import 'api_client.dart';
 import 'params.dart';
 
 class ApiClientDioImpl implements ApiClient {
-  final Params _params;
   final Dio _dio;
 
-  ApiClientDioImpl(this._params, this._dio);
+  ApiClientDioImpl(this._dio);
 
   // GET
   @override
-  Future<Response> get({required String endpoint}) async {
-    final response = await _dio.get(
-      endpoint,
-      options: http.Options(
-        headers: _params.getHeaders(token: dotenv.env['API_TOKEN']),
-      ),
-    );
-    return response;
-  }
+  Future<Response> get({required String url}) async => await _dio.get(url);
 }

@@ -1,3 +1,3 @@
 abstract class ApiClient {
-  Future<dynamic> get({required String endpoint});
+  Future<dynamic> get({required String url});
 }

@@ -7,7 +7,7 @@ class NetworkRepo {
   NetworkRepo(this._apiClient);
 
   Future<void> fetchCurrenciesResponse() async {
-    final response = await _apiClient.get(endpoint: Endpoints.fetchMarket);
+    final response = await _apiClient.get(url: '${Endpoints.baseUrl}${Endpoints.fetchMarket}');
     print('object');
   }
 }
