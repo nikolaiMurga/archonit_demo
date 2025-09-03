@@ -1,4 +1,5 @@
 import 'package:archonit_demo/data/network/endpoints.dart';
+import 'package:archonit_demo/recources%20/app_constants.dart';
 import 'package:archonit_demo/recources%20/app_strings.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -17,13 +18,14 @@ void main() async {
 
   // API
   final Params params = Params();
-  // final Dio dio = Dio();
-  final Dio dio = Dio(
-    BaseOptions(
-      baseUrl: Endpoints.baseUrl,
-      headers: params.getHeaders(token: dotenv.env[AppStrings.apiToken]),
-    ),
+  final BaseOptions baseOptions = BaseOptions(
+    baseUrl: Endpoints.baseUrl,
+    headers: params.getHeaders(token: dotenv.env[AppStrings.apiToken]),
+    connectTimeout: AppConstants.connectTimeout,
+    receiveTimeout: AppConstants.receiveTimeout,
+    sendTimeout: AppConstants.sendTimeout,
   );
+  final Dio dio = Dio(baseOptions);
 
   final ApiClient apiClient = ApiClientDioImpl(dio);
   // final ApiClient apiClient = ApiClientHttpImpl(params);
