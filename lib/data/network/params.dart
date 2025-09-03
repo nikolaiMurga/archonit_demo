@@ -1,3 +1,5 @@
+import 'requests/assets_request.dart';
+
 class Params {
   static Params? _instance;
 
@@ -25,5 +27,14 @@ class Params {
         "Content-Type": "application/json",
       };
     }
+  }
+
+  Map<String, String> getAssetsRequestQueryParams({required AssetsRequest request}) {
+    final Map<String, String> queryParams = {
+      'limit': '${request.limit}',
+      'offset': '${request.offset}',
+    };
+
+    return queryParams;
   }
 }
