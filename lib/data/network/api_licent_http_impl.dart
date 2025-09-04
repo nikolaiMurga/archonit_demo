@@ -1,7 +1,7 @@
-import 'package:archonit_demo/recources%20/app_strings.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
+import '../../resources/app_strings.dart';
 import 'api_client.dart';
 import 'params.dart';
 

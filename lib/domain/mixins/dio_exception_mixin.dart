@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../../recources /app_strings.dart';
+import '../../resources/app_strings.dart';
 import '../models/error_model.dart';
 
 mixin DioExceptionMixin {

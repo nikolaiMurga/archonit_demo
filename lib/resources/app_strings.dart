@@ -7,4 +7,7 @@ class AppStrings {
   static const serverTimeout = 'Server error';
   static const requestCancelled = 'Request cancelled';
   static const unknownError = 'Unknown error:';
+
+  // home screen
+  static const noSearchResults = 'No results';
 }
