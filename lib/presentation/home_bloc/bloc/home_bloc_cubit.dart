@@ -25,8 +25,23 @@ class HomeBlocCubit extends Cubit<HomeBlocState> with RandomColorMixin {
     _nextPage = 0;
   }
 
-  Future<void> getCurrenciesList() async {
-    try{
+  Future<void> getCurrencies({bool isFirstBoot = false, bool isScroll = false}) async {
+    if (_isLastPage && !isFirstBoot) return;
+
+    if (isFirstBoot) {
+      emit(HomeBlocLoading());
+      _clear();
+    } else if (!isScroll) {
+      emit(HomeBlocLoading());
+      _clear();
+    } else {
+      emit(HomeBlocScroll());
+    }
+    fetchCurrencyUiCardModelList();
+  }
+
+  Future<void> fetchCurrencyUiCardModelList() async {
+    try {
       final request = AssetsRequest(page: _nextPage);
       final modelList = await _currencyUseCase.fetchCurrenciesList(request: request);
 
@@ -45,7 +60,7 @@ class HomeBlocCubit extends Cubit<HomeBlocState> with RandomColorMixin {
         }
         emit(HomeBlocSucceed(currencyUiModelList: _uiModelList, isLastPage: _isLastPage));
       }
-    } on ErrorModel catch (e){
+    } on ErrorModel catch (e) {
       emit(HomeBlocError());
     }
   }
