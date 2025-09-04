@@ -1,4 +1,5 @@
 import 'package:archonit_demo/presentation/home_bloc/bloc/home_bloc_cubit.dart';
+import 'package:archonit_demo/presentation/home_bloc/widgets/currency_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -48,7 +49,7 @@ class _HomeBlocScreenState extends State<HomeBlocScreen> {
                 itemCount: state.currencyUiModelList.length + 1,
                 itemBuilder: (context, index) {
                   if (index < state.currencyUiModelList.length) {
-                    return const Placeholder();
+                    return CurrencyCard(cardModel: state.currencyUiModelList[index]);
                   } else if (state.isLastPage) {
                     return const SizedBox.shrink();
                   } else {

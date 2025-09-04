@@ -45,7 +45,7 @@ class HomeBlocCubit extends Cubit<HomeBlocState> with RandomColorMixin {
       final request = AssetsRequest(page: _nextPage);
       final modelList = await _currencyUseCase.fetchCurrenciesList(request: request);
 
-      if (modelList.isNotEmpty) {
+      if (modelList.isEmpty) {
         emit(HomeBlocEmpty());
       } else {
         // todo api should respond total pages to implement stop loading ui behavior

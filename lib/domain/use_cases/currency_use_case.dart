@@ -11,7 +11,7 @@ class CurrencyUseCase {
   // todo implement mock home ui model
   // todo should return home ui model with total pages to implement last page logic
   Future<List<CurrencyModel>> fetchCurrenciesList({required AssetsRequest request}) async {
-    final resp = await _networkRepo.fetchCurrenciesResponse();
+    final resp = await _networkRepo.fetchCurrenciesResponse(request: request);
     final dtoList = resp.currencyDtoList;
 
     final List<CurrencyModel> currencyModelList = [];

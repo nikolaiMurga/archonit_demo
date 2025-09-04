@@ -33,7 +33,7 @@ void main() async {
   final ApiClient apiClient = ApiClientHttpImpl(params);
 
   // REPOS
-  final NetworkRepo networkRepo = NetworkRepo(apiClient);
+  final NetworkRepo networkRepo = NetworkRepo(apiClient, params);
 
   // USE CASES
   final CurrencyUseCase currencyUseCase = CurrencyUseCase(networkRepo);
