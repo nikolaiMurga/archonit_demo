@@ -1,23 +1,24 @@
-import 'package:archonit_demo/domain/mixins/random_color_generator_mixin.dart';
-import 'package:archonit_demo/domain/models/currency_model.dart';
-
 import '../../data/network/dtos/currency_dto.dart';
+import '../../data/network/requests/assets_request.dart';
 import '../../data/repos/network_repo.dart';
+import '../models/currency_model.dart';
 
-class CurrencyUseCase with RandomColorGeneratorMixin {
+class CurrencyUseCase {
   final NetworkRepo _networkRepo;
 
   CurrencyUseCase(this._networkRepo);
 
-  Future<List<CurrencyModel>> fetchCurrenciesList() async {
+  // todo implement mock home ui model
+  // todo should return home ui model with total pages to implement last page logic
+  Future<List<CurrencyModel>> fetchCurrenciesList({required AssetsRequest request}) async {
     final resp = await _networkRepo.fetchCurrenciesResponse();
     final dtoList = resp.currencyDtoList;
 
     final List<CurrencyModel> currencyModelList = [];
 
     if (dtoList != null && dtoList.isNotEmpty) {
-      for (CurrencyDto _ in dtoList) {
-        final currencyModel = CurrencyModel.fromDto(_);
+      for (CurrencyDto dto in dtoList) {
+        final currencyModel = CurrencyModel.fromDto(dto);
         currencyModelList.add(currencyModel);
       }
     }
