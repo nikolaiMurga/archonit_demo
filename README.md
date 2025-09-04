@@ -20,8 +20,14 @@ INITIAL REQUIREMENTS:
    - compliance with the rules for writing code.
 
 
-To work with the project, you should:
+To run the project, you should:
 1. register on the resource by link REST API.
 2. get an Api Key. 
 3. create a file .env in root of your project.
 4. put your Api Key to this file by key API_TOKEN=
+
+DEMO: 
+
+
+https://github.com/user-attachments/assets/c8e119e9-cae7-44f0-9e22-d7f5ad87fccd
+
