@@ -1,3 +1,5 @@
+import 'package:archonit_demo/domain/ui_models/home_ui_model.dart';
+
 import '../../data/network/dtos/currency_dto.dart';
 import '../../data/network/requests/assets_request.dart';
 import '../../data/repos/network_repo.dart';
@@ -8,9 +10,7 @@ class CurrencyUseCase {
 
   CurrencyUseCase(this._networkRepo);
 
-  // todo implement mock home ui model
-  // todo should return home ui model with total pages to implement last page logic
-  Future<List<CurrencyModel>> fetchCurrenciesList({required AssetsRequest request}) async {
+  Future<HomeUiModel> fetchCurrenciesList({required AssetsRequest request}) async {
     final resp = await _networkRepo.fetchCurrenciesResponse(request: request);
     final dtoList = resp.currencyDtoList;
 
@@ -22,7 +22,8 @@ class CurrencyUseCase {
         currencyModelList.add(currencyModel);
       }
     }
-    return currencyModelList;
+    final homeUiModel = HomeUiModel(currencyModelList: currencyModelList);
+    return homeUiModel;
   }
 
 // could be here save currency for caching favourites for example

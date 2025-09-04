@@ -40,17 +40,15 @@ class HomeBlocCubit extends Cubit<HomeBlocState> with RandomColorMixin {
   Future<void> fetchCurrencyUiCardModelList() async {
     try {
       final request = AssetsRequest(page: _nextPage);
-      final modelList = await _currencyUseCase.fetchCurrenciesList(request: request);
+      final homeUiModel = await _currencyUseCase.fetchCurrenciesList(request: request);
 
-      if (modelList.isEmpty) {
+      if (homeUiModel.currencyModelList.isEmpty) {
         emit(HomeBlocEmpty());
       } else {
-        // todo api should respond total pages to implement stop loading ui behavior
-        // _isLastPage = pUiModel.page == pUiModel.totalPages;
-        // if (!_isLastPage) _nextPage = pUiModel.page + 1;
+        _isLastPage = _nextPage == homeUiModel.totalPages;
         if (!_isLastPage) _nextPage += 1;
 
-        for (CurrencyModel model in modelList) {
+        for (CurrencyModel model in homeUiModel.currencyModelList) {
           final color = generateRandomColor();
           final uiModel = CurrencyUiCardModel(currencyModel: model, color: color);
           _uiModelList.add(uiModel);
