@@ -1,5 +1,8 @@
+import 'package:archonit_demo/domain/use_cases/currency_use_case.dart';
+import 'package:archonit_demo/presentation/home_bloc/bloc/home_bloc_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'archonit_demo_app.dart';
@@ -13,7 +16,6 @@ import 'resources/app_constants.dart';
 import 'resources/app_strings.dart';
 
 void main() async {
-  runApp(const ArchonitDemoApp());
   await dotenv.load(fileName: ".env");
 
   // API
@@ -27,9 +29,24 @@ void main() async {
   );
   final Dio dio = Dio(baseOptions);
 
-  final ApiClient apiClient = ApiClientDioImpl(dio);
-  // final ApiClient apiClient = ApiClientHttpImpl(params);
+  // final ApiClient apiClient = ApiClientDioImpl(dio);
+  final ApiClient apiClient = ApiClientHttpImpl(params);
 
   // REPOS
   final NetworkRepo networkRepo = NetworkRepo(apiClient);
+
+  // USE CASES
+  final CurrencyUseCase currencyUseCase = CurrencyUseCase(networkRepo);
+
+  // BLOCS
+  final HomeBlocCubit homeBlocCubit = HomeBlocCubit(currencyUseCase);
+
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<HomeBlocCubit>(create: (c) => homeBlocCubit),
+      ],
+      child: const ArchonitDemoApp(),
+    ),
+  );
 }

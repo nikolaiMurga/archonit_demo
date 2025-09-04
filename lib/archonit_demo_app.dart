@@ -1,3 +1,4 @@
+import 'package:archonit_demo/presentation/home_bloc/home_bloc_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,7 +10,7 @@ class ArchonitDemoApp extends StatelessWidget {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Placeholder(),
+      home: HomeBlocPage(),
     );
   }
 }
