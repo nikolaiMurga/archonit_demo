@@ -12,6 +12,6 @@ mixin RandomColorMixin {
     int green = random.nextInt(AppConstants.rgbValue);
     int blue = random.nextInt(AppConstants.rgbValue);
 
-    return Color.fromRGBO(red, green, blue, 0.5);
+    return Color.fromRGBO(red, green, blue, 0.1);
   }
 }
