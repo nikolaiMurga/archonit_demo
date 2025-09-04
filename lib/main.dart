@@ -1,5 +1,3 @@
-import 'package:archonit_demo/domain/use_cases/currency_use_case.dart';
-import 'package:archonit_demo/presentation/home_bloc/bloc/home_bloc_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +10,8 @@ import 'data/network/api_licent_http_impl.dart';
 import 'data/network/endpoints.dart';
 import 'data/network/params.dart';
 import 'data/repos/network_repo.dart';
+import 'domain/use_cases/currency_use_case.dart';
+import 'presentation/home/bloc/home_cubit.dart';
 import 'resources/app_constants.dart';
 import 'resources/app_strings.dart';
 
@@ -39,12 +39,12 @@ void main() async {
   final CurrencyUseCase currencyUseCase = CurrencyUseCase(networkRepo);
 
   // BLOCS
-  final HomeBlocCubit homeBlocCubit = HomeBlocCubit(currencyUseCase);
+  final HomeCubit homeBlocCubit = HomeCubit(currencyUseCase);
 
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider<HomeBlocCubit>(create: (c) => homeBlocCubit),
+        RepositoryProvider<CurrencyUseCase>(create: (c) => currencyUseCase),
       ],
       child: const ArchonitDemoApp(),
     ),

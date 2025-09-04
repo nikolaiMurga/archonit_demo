@@ -8,12 +8,12 @@ import '../../../domain/models/error_model.dart';
 import '../../../domain/ui_models/currencies_ui_card_model.dart';
 import '../../../domain/use_cases/currency_use_case.dart';
 
-part 'home_bloc_state.dart';
+part 'home_state.dart';
 
-class HomeBlocCubit extends Cubit<HomeBlocState> with RandomColorMixin {
+class HomeCubit extends Cubit<HomeState> with RandomColorMixin {
   final CurrencyUseCase _currencyUseCase;
 
-  HomeBlocCubit(this._currencyUseCase) : super(HomeBlocInitial());
+  HomeCubit(this._currencyUseCase) : super(HomeInitial());
 
   final List<CurrencyUiCardModel> _uiModelList = [];
   bool _isLastPage = false;
@@ -29,10 +29,10 @@ class HomeBlocCubit extends Cubit<HomeBlocState> with RandomColorMixin {
     if (_isLastPage) return;
 
     if (!isScroll) {
-      emit(HomeBlocLoading());
+      emit(HomeLoading());
       _clear();
     } else {
-      emit(HomeBlocScroll());
+      emit(HomeScroll());
     }
     fetchCurrencyUiCardModelList();
   }
@@ -43,7 +43,7 @@ class HomeBlocCubit extends Cubit<HomeBlocState> with RandomColorMixin {
       final homeUiModel = await _currencyUseCase.fetchCurrenciesList(request: request);
 
       if (homeUiModel.currencyModelList.isEmpty) {
-        emit(HomeBlocEmpty());
+        emit(HomeEmpty());
       } else {
         _isLastPage = _nextPage == homeUiModel.totalPages;
         if (!_isLastPage) _nextPage += 1;
@@ -53,10 +53,10 @@ class HomeBlocCubit extends Cubit<HomeBlocState> with RandomColorMixin {
           final uiModel = CurrencyUiCardModel(currencyModel: model, color: color);
           _uiModelList.add(uiModel);
         }
-        emit(HomeBlocSucceed(currencyUiModelList: _uiModelList, isLastPage: _isLastPage));
+        emit(HomeSucceed(currencyUiModelList: _uiModelList, isLastPage: _isLastPage));
       }
     } on ErrorModel catch (e) {
-      emit(HomeBlocError());
+      emit(HomeError());
     }
   }
 }

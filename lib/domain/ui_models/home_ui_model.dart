@@ -1,6 +1,4 @@
-import 'package:archonit_demo/domain/models/currency_model.dart';
-
-import 'currencies_ui_card_model.dart';
+import '../models/currency_model.dart';
 
 class HomeUiModel {
   final List<CurrencyModel> currencyModelList;

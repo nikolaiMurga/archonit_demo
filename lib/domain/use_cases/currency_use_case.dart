@@ -1,9 +1,8 @@
-import 'package:archonit_demo/domain/ui_models/home_ui_model.dart';
-
 import '../../data/network/dtos/currency_dto.dart';
 import '../../data/network/requests/assets_request.dart';
 import '../../data/repos/network_repo.dart';
 import '../models/currency_model.dart';
+import '../ui_models/home_ui_model.dart';
 
 class CurrencyUseCase {
   final NetworkRepo _networkRepo;
@@ -25,7 +24,4 @@ class CurrencyUseCase {
     final homeUiModel = HomeUiModel(currencyModelList: currencyModelList);
     return homeUiModel;
   }
-
-// could be here save currency for caching favourites for example
-// Future<void> saveFavourites() async {}
 }

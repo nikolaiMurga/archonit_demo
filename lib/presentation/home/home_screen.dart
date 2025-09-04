@@ -1,20 +1,20 @@
-import 'package:archonit_demo/presentation/home_bloc/bloc/home_bloc_cubit.dart';
-import 'package:archonit_demo/presentation/home_bloc/widgets/currency_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../common/helpers/loading_indicator.dart';
+import 'bloc/home_cubit.dart';
+import 'widgets/currency_card.dart';
 import 'widgets/empty_state_widget.dart';
 
-class HomeBlocScreen extends StatefulWidget {
-  const HomeBlocScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<HomeBlocScreen> createState() => _HomeBlocScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeBlocScreenState extends State<HomeBlocScreen> {
-  late final HomeBlocCubit _homeBlocCubit = context.read<HomeBlocCubit>();
+class _HomeScreenState extends State<HomeScreen> {
+  late final HomeCubit _homeCubit = context.read<HomeCubit>();
   final _controller = ScrollController();
 
   @override
@@ -33,14 +33,14 @@ class _HomeBlocScreenState extends State<HomeBlocScreen> {
   void _fetchPage() {
     final endOfPage = _controller.position.pixels == _controller.position.maxScrollExtent;
     if (endOfPage) {
-      _homeBlocCubit.getCurrencies(isScroll: true);
+      _homeCubit.getCurrencies(isScroll: true);
     }
   }
 
   // refresh method
   void _reloadList() {
     _resetController();
-    _homeBlocCubit.getCurrencies();
+    _homeCubit.getCurrencies();
   }
 
   @override
@@ -52,18 +52,18 @@ class _HomeBlocScreenState extends State<HomeBlocScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<HomeBlocCubit, HomeBlocState>(
+      body: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {
-          if (state is HomeBlocError) {} /*showErrorToast(context, state.error);*/
+          if (state is HomeError) {} /*showErrorToast(context, state.error);*/
         },
         buildWhen: (context, state) {
-          return state is HomeBlocSucceed || state is HomeBlocLoading;
+          return state is HomeSucceed || state is HomeLoading;
         },
         builder: (context, state) {
-          if (state is HomeBlocLoading) {
+          if (state is HomeLoading) {
             return const LoadingIndicator(width: double.maxFinite);
           }
-          if (state is HomeBlocSucceed) {
+          if (state is HomeSucceed) {
             return RefreshIndicator(
               onRefresh: () async => _reloadList(),
               child: ListView.separated(
@@ -83,7 +83,7 @@ class _HomeBlocScreenState extends State<HomeBlocScreen> {
               ),
             );
           }
-          if (state is HomeBlocEmpty) return const EmptyStateWidget();
+          if (state is HomeEmpty) return const EmptyStateWidget();
           return const SizedBox.shrink();
         },
       ),
