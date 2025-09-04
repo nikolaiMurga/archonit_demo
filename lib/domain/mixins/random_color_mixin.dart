@@ -1,7 +1,8 @@
 import 'dart:math';
 
-import 'package:archonit_demo/recources%20/app_constants.dart';
 import 'package:flutter/material.dart';
+
+import '../../resources/app_constants.dart';
 
 mixin RandomColorMixin {
   Random random = Random();
@@ -11,6 +12,6 @@ mixin RandomColorMixin {
     int green = random.nextInt(AppConstants.rgbValue);
     int blue = random.nextInt(AppConstants.rgbValue);
 
-    return Color.fromRGBO(red, green, blue, 0.5);
+    return Color.fromRGBO(red, green, blue, 0.1);
   }
 }

@@ -8,12 +8,12 @@ import '../../../domain/models/error_model.dart';
 import '../../../domain/ui_models/currencies_ui_card_model.dart';
 import '../../../domain/use_cases/currency_use_case.dart';
 
-part 'home_bloc_state.dart';
+part 'home_state.dart';
 
-class HomeBlocCubit extends Cubit<HomeBlocState> with RandomColorMixin {
+class HomeCubit extends Cubit<HomeState> with RandomColorMixin {
   final CurrencyUseCase _currencyUseCase;
 
-  HomeBlocCubit(this._currencyUseCase) : super(HomeBlocInitial());
+  HomeCubit(this._currencyUseCase) : super(HomeInitial());
 
   final List<CurrencyUiCardModel> _uiModelList = [];
   bool _isLastPage = false;
@@ -25,28 +25,38 @@ class HomeBlocCubit extends Cubit<HomeBlocState> with RandomColorMixin {
     _nextPage = 0;
   }
 
-  Future<void> getCurrenciesList() async {
-    try{
-      final request = AssetsRequest(page: _nextPage);
-      final modelList = await _currencyUseCase.fetchCurrenciesList(request: request);
+  Future<void> getCurrencies({bool isScroll = false}) async {
+    if (_isLastPage) return;
 
-      if (modelList.isNotEmpty) {
-        emit(HomeBlocEmpty());
+    if (!isScroll) {
+      emit(HomeLoading());
+      _clear();
+    } else {
+      emit(HomeScroll());
+    }
+    fetchCurrencyUiCardModelList();
+  }
+
+  Future<void> fetchCurrencyUiCardModelList() async {
+    try {
+      final request = AssetsRequest(page: _nextPage);
+      final homeUiModel = await _currencyUseCase.fetchCurrenciesList(request: request);
+
+      if (homeUiModel.currencyModelList.isEmpty) {
+        emit(HomeEmpty());
       } else {
-        // todo api should respond total pages to implement stop loading ui behavior
-        // _isLastPage = pUiModel.page == pUiModel.totalPages;
-        // if (!_isLastPage) _nextPage = pUiModel.page + 1;
+        _isLastPage = _nextPage == homeUiModel.totalPages;
         if (!_isLastPage) _nextPage += 1;
 
-        for (CurrencyModel model in modelList) {
+        for (CurrencyModel model in homeUiModel.currencyModelList) {
           final color = generateRandomColor();
           final uiModel = CurrencyUiCardModel(currencyModel: model, color: color);
           _uiModelList.add(uiModel);
         }
-        emit(HomeBlocSucceed(currencyUiModelList: _uiModelList, isLastPage: _isLastPage));
+        emit(HomeSucceed(currencyUiModelList: _uiModelList, isLastPage: _isLastPage));
       }
-    } on ErrorModel catch (e){
-      emit(HomeBlocError());
+    } on ErrorModel catch (e) {
+      emit(HomeError());
     }
   }
 }

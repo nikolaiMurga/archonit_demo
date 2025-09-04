@@ -1,15 +1,19 @@
 import 'dart:convert';
 
+import 'package:archonit_demo/data/network/params.dart';
+
 import '../../app/logging_service.dart';
 import '../../domain/models/error_model.dart';
 import '../network/api_client.dart';
 import '../network/endpoints.dart';
+import '../network/requests/assets_request.dart';
 import '../network/responses /assets_response.dart';
 
 class NetworkRepo {
   final ApiClient _apiClient;
+  final Params _params;
 
-  NetworkRepo(this._apiClient);
+  NetworkRepo(this._apiClient, this._params);
 
   Future<String> _handleResponseStatus({required Future<dynamic> apiCall}) async {
     final stopwatch = Stopwatch()..start();
@@ -37,8 +41,9 @@ class NetworkRepo {
     return body;
   }
 
-  Future<AssetsResponse> fetchCurrenciesResponse() async {
-    final body = await _handleResponseStatus(apiCall: _apiClient.get(url: '${Endpoints.baseUrl}${Endpoints.fetchAssets}'));
+  Future<AssetsResponse> fetchCurrenciesResponse({required AssetsRequest request}) async {
+    final queryString = Uri(queryParameters: _params.getAssetsRequestQueryParams(request: request));
+    final body = await _handleResponseStatus(apiCall: _apiClient.get(url: '${Endpoints.baseUrl}${Endpoints.fetchAssets}$queryString'));
     return AssetsResponse.fromJson(jsonDecode(body));
   }
 }

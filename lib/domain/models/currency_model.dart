@@ -17,6 +17,6 @@ class CurrencyModel {
         id: dto.id ?? 'id',
         symbol: dto.symbol ?? 'symbol',
         name: dto.name ?? 'name',
-        priceUsd: dto.priceUsd ?? 0.00,
+        priceUsd: double.tryParse(dto.priceUsd!) ?? 0.00,
       );
 }

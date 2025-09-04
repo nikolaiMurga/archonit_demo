@@ -2,7 +2,7 @@ class CurrencyDto {
   String? id;
   String? symbol;
   String? name;
-  double? priceUsd;
+  String? priceUsd;
 
   CurrencyDto({
     this.id,
