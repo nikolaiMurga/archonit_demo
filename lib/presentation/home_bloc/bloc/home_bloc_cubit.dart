@@ -25,13 +25,10 @@ class HomeBlocCubit extends Cubit<HomeBlocState> with RandomColorMixin {
     _nextPage = 0;
   }
 
-  Future<void> getCurrencies({bool isFirstBoot = false, bool isScroll = false}) async {
-    if (_isLastPage && !isFirstBoot) return;
+  Future<void> getCurrencies({bool isScroll = false}) async {
+    if (_isLastPage) return;
 
-    if (isFirstBoot) {
-      emit(HomeBlocLoading());
-      _clear();
-    } else if (!isScroll) {
+    if (!isScroll) {
       emit(HomeBlocLoading());
       _clear();
     } else {

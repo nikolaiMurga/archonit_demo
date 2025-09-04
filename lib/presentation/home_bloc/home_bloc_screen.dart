@@ -17,10 +17,36 @@ class _HomeBlocScreenState extends State<HomeBlocScreen> {
   late final HomeBlocCubit _homeBlocCubit = context.read<HomeBlocCubit>();
   final _controller = ScrollController();
 
+  @override
+  void initState() {
+    _controller.addListener(_fetchPage);
+    super.initState();
+  }
+
+  void _resetController() {
+    setState(() {
+      if (_controller.hasClients) _controller.jumpTo(0);
+    });
+  }
+
+  // infinity scroll method
+  void _fetchPage() {
+    final endOfPage = _controller.position.pixels == _controller.position.maxScrollExtent;
+    if (endOfPage) {
+      _homeBlocCubit.getCurrencies(isScroll: true);
+    }
+  }
+
   // refresh method
   void _reloadList() {
-    // _resetController();
-    // _categoriesDetailsCubit.searchPackagesAndSingleTests();
+    _resetController();
+    _homeBlocCubit.getCurrencies();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -30,17 +56,15 @@ class _HomeBlocScreenState extends State<HomeBlocScreen> {
         listener: (context, state) {
           if (state is HomeBlocError) {} /*showErrorToast(context, state.error);*/
         },
-        // buildWhen: (context, state) {
-        //   return state is HomeBlocSucceed || state is HomeBlocLoading;
-        // },
+        buildWhen: (context, state) {
+          return state is HomeBlocSucceed || state is HomeBlocLoading;
+        },
         builder: (context, state) {
           if (state is HomeBlocLoading) {
             return const LoadingIndicator(width: double.maxFinite);
           }
           if (state is HomeBlocSucceed) {
             return RefreshIndicator(
-              // backgroundColor: AppColors.whiteCream,
-              // color: AppColors.primaryColor,
               onRefresh: () async => _reloadList(),
               child: ListView.separated(
                 physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
