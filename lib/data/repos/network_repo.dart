@@ -4,6 +4,7 @@ import '../../app/logging_service.dart';
 import '../../domain/models/error_model.dart';
 import '../network/api_client.dart';
 import '../network/endpoints.dart';
+import '../network/responses /assets_response.dart';
 
 class NetworkRepo {
   final ApiClient _apiClient;
@@ -36,8 +37,8 @@ class NetworkRepo {
     return body;
   }
 
-  Future<void> fetchCurrenciesResponse() async {
-    final response = await _handleResponseStatus(apiCall: _apiClient.get(url: '${Endpoints.baseUrl}${Endpoints.fetchAssets}'));
-    print('object');
+  Future<AssetsResponse> fetchCurrenciesResponse() async {
+    final body = await _handleResponseStatus(apiCall: _apiClient.get(url: '${Endpoints.baseUrl}${Endpoints.fetchAssets}'));
+    return AssetsResponse.fromJson(jsonDecode(body));
   }
 }
