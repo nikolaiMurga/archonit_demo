@@ -32,7 +32,7 @@ class Params {
   Map<String, String> getAssetsRequestQueryParams({required AssetsRequest request}) {
     final Map<String, String> queryParams = {
       'limit': '${request.limit}',
-      'offset': '${request.offset}',
+      'offset': '${request.getOffset}',
     };
 
     return queryParams;

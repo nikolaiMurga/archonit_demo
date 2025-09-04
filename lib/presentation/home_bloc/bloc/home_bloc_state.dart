@@ -15,11 +15,21 @@ final class HomeBlocLoading extends HomeBlocState {
 }
 
 final class HomeBlocSucceed extends HomeBlocState {
+  final List<CurrencyUiCardModel> currencyUiModelList;
+  final bool isLastPage;
+
+  const HomeBlocSucceed({required this.currencyUiModelList, required this.isLastPage});
+
+  @override
+  List<Object> get props => [currencyUiModelList, isLastPage];
+}
+
+final class HomeBlocError extends HomeBlocState {
   @override
   List<Object> get props => [];
 }
 
-final class HomeBlocError extends HomeBlocState {
+final class HomeBlocEmpty extends HomeBlocState {
   @override
   List<Object> get props => [];
 }
