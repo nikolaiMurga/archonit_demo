@@ -33,3 +33,8 @@ final class HomeBlocEmpty extends HomeBlocState {
   @override
   List<Object> get props => [];
 }
+
+final class HomeBlocScroll extends HomeBlocState {
+  @override
+  List<Object> get props => [];
+}
