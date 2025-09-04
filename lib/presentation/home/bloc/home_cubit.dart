@@ -25,8 +25,8 @@ class HomeCubit extends Cubit<HomeState> with RandomColorMixin {
     _nextPage = 0;
   }
 
-  Future<void> getCurrencies({bool isScroll = false}) async {
-    if (_isLastPage) return;
+  Future<void> getCurrencies({bool isReload = false, bool isScroll = false}) async {
+    if (_isLastPage && !isReload) return;
 
     if (!isScroll) {
       emit(HomeLoading());

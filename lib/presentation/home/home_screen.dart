@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // refresh method
   void _reloadList() {
     _resetController();
-    _homeCubit.getCurrencies();
+    _homeCubit.getCurrencies(isReload: true);
   }
 
   @override
