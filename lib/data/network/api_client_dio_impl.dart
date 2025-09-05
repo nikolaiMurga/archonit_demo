@@ -10,7 +10,8 @@ class ApiClientDioImpl with DioExceptionMixin implements ApiClient {
 
   // GET
   @override
-  Future<Response> get({required String url, Map<String, dynamic>? queryParameters}) async {
-    return await dioExceptionHandle(apiCall: _dio.get(url, queryParameters: queryParameters));
+  Future<Map<String, dynamic>> get({required String url, Map<String, dynamic>? queryParameters}) async {
+    final resp =  await dioExceptionHandle(apiCall: _dio.get(url, queryParameters: queryParameters));
+    return resp.data;
   }
 }
