@@ -1,8 +1,9 @@
-import 'package:archonit_demo/domain/mixins/http_exception_mixin.dart';
+import 'dart:convert';
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
 
+import '../../domain/mixins/http_exception_mixin.dart';
 import '../../resources/app_strings.dart';
 import 'api_client.dart';
 import 'params.dart';
@@ -14,8 +15,11 @@ class ApiClientHttpImpl with HttpExceptionMixin implements ApiClient {
 
   // GET
   @override
-  Future<Response> get({required String url}) async {
+  Future<Map<String, dynamic>> get({required String url}) async {
     final call = http.get(Uri.parse(url), headers: _params.getHeaders(token: dotenv.env[AppStrings.apiToken]));
-    return await handleResponseStatus(apiCall: call);
+    final resp = await handleResponseStatus(apiCall: call);
+    final body = utf8.decode(resp.bodyBytes);
+    final data = jsonDecode(body);
+    return data;
   }
 }
