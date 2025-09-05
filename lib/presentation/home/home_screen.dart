@@ -1,3 +1,4 @@
+import 'package:archonit_demo/domain/mixins/snack_bar_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,7 +14,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with SnackBarMixin {
   late final HomeCubit _homeCubit = context.read<HomeCubit>();
   final _controller = ScrollController();
 
@@ -54,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {
-          if (state is HomeError) {} /*showErrorToast(context, state.error);*/
+          if (state is HomeError) showSnackBar(context, state.error);
         },
         buildWhen: (context, state) {
           return state is HomeSucceed || state is HomeLoading;

@@ -1,3 +1,4 @@
+import 'package:archonit_demo/resources/app_strings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -56,7 +57,7 @@ class HomeCubit extends Cubit<HomeState> with RandomColorMixin {
         emit(HomeSucceed(currencyUiModelList: _uiModelList, isLastPage: _isLastPage));
       }
     } on ErrorModel catch (e) {
-      emit(HomeError());
+      emit(HomeError(error: e.error ?? AppStrings.noErrorMessage));
     }
   }
 }

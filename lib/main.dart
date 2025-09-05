@@ -6,12 +6,10 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'archonit_demo_app.dart';
 import 'data/network/api_client.dart';
 import 'data/network/api_client_dio_impl.dart';
-import 'data/network/api_licent_http_impl.dart';
 import 'data/network/endpoints.dart';
 import 'data/network/params.dart';
 import 'data/repos/network_repo.dart';
 import 'domain/use_cases/currency_use_case.dart';
-import 'presentation/home/bloc/home_cubit.dart';
 import 'resources/app_constants.dart';
 import 'resources/app_strings.dart';
 
@@ -29,17 +27,14 @@ void main() async {
   );
   final Dio dio = Dio(baseOptions);
 
-  // final ApiClient apiClient = ApiClientDioImpl(dio);
-  final ApiClient apiClient = ApiClientHttpImpl(params);
+  final ApiClient apiClient = ApiClientDioImpl(dio);
+  // final ApiClient apiClient = ApiClientHttpImpl(params);
 
   // REPOS
   final NetworkRepo networkRepo = NetworkRepo(apiClient, params);
 
   // USE CASES
   final CurrencyUseCase currencyUseCase = CurrencyUseCase(networkRepo);
-
-  // BLOCS
-  final HomeCubit homeBlocCubit = HomeCubit(currencyUseCase);
 
   runApp(
     MultiBlocProvider(

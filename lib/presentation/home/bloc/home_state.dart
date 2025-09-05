@@ -25,8 +25,12 @@ final class HomeSucceed extends HomeState {
 }
 
 final class HomeError extends HomeState {
+  final String error;
+
+  const HomeError({required this.error});
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [error];
 }
 
 final class HomeEmpty extends HomeState {
