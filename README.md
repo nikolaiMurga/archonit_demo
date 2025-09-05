@@ -29,5 +29,7 @@ To run the project, you should:
 DEMO: 
 
 
-https://github.com/user-attachments/assets/c8e119e9-cae7-44f0-9e22-d7f5ad87fccd
+
+https://github.com/user-attachments/assets/6c51beb9-e91a-4648-8a40-090bafd4df7b
+
 
