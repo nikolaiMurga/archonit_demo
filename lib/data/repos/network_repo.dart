@@ -13,20 +13,6 @@ class NetworkRepo {
 
   NetworkRepo(this._apiClient, this._params);
 
-  // Future<AssetsResponse> fetchCurrenciesResponse({required AssetsRequest request}) async {
-  //   final queryString = Uri(queryParameters: _params.getAssetsRequestQueryParams(request: request));
-  //   final response = await _apiClient.get(url: '${Endpoints.baseUrl}${Endpoints.fetchAssets}$queryString');
-  //   final body = utf8.decode(response.bodyBytes);
-  //   return AssetsResponse.fromJson(jsonDecode(body));
-  // }
-
-  // dio
-  // Future<AssetsResponse> fetchCurrenciesResponse({required AssetsRequest request}) async {
-  //   final queryString = Uri(queryParameters: _params.getAssetsRequestQueryParams(request: request));
-  //   final response = await _apiClient.get(url: '${Endpoints.baseUrl}${Endpoints.fetchAssets}$queryString');
-  //   return AssetsResponse.fromJson(response.data);
-  // }
-
   Future<AssetsResponse> fetchCurrenciesResponse({required AssetsRequest request}) async {
     final queryString = Uri(queryParameters: _params.getAssetsRequestQueryParams(request: request));
     final response = await _apiClient.get(url: '${Endpoints.baseUrl}${Endpoints.fetchAssets}$queryString');
