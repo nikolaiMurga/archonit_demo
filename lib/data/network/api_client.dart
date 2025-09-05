@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 abstract class ApiClient {
-  Future<String> get({required String url});
+  Future<dynamic> get({required String url});
 }

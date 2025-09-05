@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:http/http.dart';
+
 import '../../app/logging_service.dart';
 import '../models/error_model.dart';
 
 mixin HttpExceptionMixin {
-  Future<String> handleResponseStatus({required Future<dynamic> apiCall}) async {
+  Future<Response> handleResponseStatus({required Future<dynamic> apiCall}) async {
     final stopwatch = Stopwatch()..start();
     final response = await apiCall;
     stopwatch.stop();
@@ -27,6 +29,6 @@ mixin HttpExceptionMixin {
       // throw ErrorDto(detail: response.reasonPhrase);
     }
 
-    return body;
+    return response;
   }
 }
