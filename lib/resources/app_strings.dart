@@ -22,4 +22,6 @@ class AppStrings {
 
   // home screen
   static const noSearchResults = 'No results';
+  static const noErrorMessage = 'No error message';
+  static const ok = 'ОК';
 }
