@@ -29,8 +29,8 @@ void main() async {
   );
   final Dio dio = Dio(baseOptions);
 
-  // final ApiClient apiClient = ApiClientDioImpl(dio);
-  final ApiClient apiClient = ApiClientHttpImpl(params);
+  final ApiClient apiClient = ApiClientDioImpl(dio);
+  // final ApiClient apiClient = ApiClientHttpImpl(params);
 
   // REPOS
   final NetworkRepo networkRepo = NetworkRepo(apiClient, params);
