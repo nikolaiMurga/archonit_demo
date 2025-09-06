@@ -29,7 +29,7 @@ class Params {
     }
   }
 
-  Map<String, String> getAssetsRequestQueryParams({required AssetsRequest request}) {
+  Map<String, String> getCurrenciesRequestQueryParams({required CurrenciesRequest request}) {
     final Map<String, String> queryParams = {
       'limit': '${request.limit}',
       'offset': '${request.getOffset}',

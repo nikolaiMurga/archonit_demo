@@ -15,7 +15,7 @@ final class HomeLoading extends HomeState {
 }
 
 final class HomeSucceed extends HomeState {
-  final List<CurrencyUiCardModel> currencyUiModelList;
+  final List<CurrencyUiModel> currencyUiModelList;
   final bool isLastPage;
 
   const HomeSucceed({required this.currencyUiModelList, required this.isLastPage});

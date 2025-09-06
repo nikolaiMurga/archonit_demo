@@ -1,9 +1,10 @@
-import 'package:archonit_demo/domain/ui_models/currencies_ui_card_model.dart';
-import 'package:archonit_demo/resources/app_test_styles.dart';
 import 'package:flutter/material.dart';
 
+import '../../../domain/ui_models/currencies_ui_model.dart';
+import '../../../resources/app_test_styles.dart';
+
 class CurrencyCard extends StatelessWidget {
-  final CurrencyUiCardModel cardModel;
+  final CurrencyUiModel cardModel;
 
   const CurrencyCard({super.key, required this.cardModel});
 
