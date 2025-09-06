@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../models/currency_model.dart';
 
-class CurrencyUiCardModel {
+class CurrencyUiModel {
   final CurrencyModel currencyModel;
   final Color color;
 
-  CurrencyUiCardModel({
+  CurrencyUiModel({
     required this.currencyModel,
     required this.color,
   });

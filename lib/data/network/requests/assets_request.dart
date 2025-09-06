@@ -1,8 +1,8 @@
-class AssetsRequest {
+class CurrenciesRequest {
   final int limit;
   final int page;
 
-  AssetsRequest({this.limit = 15, required this.page});
+  CurrenciesRequest({this.limit = 15, required this.page});
 
   int get getOffset => limit * page;
 }
