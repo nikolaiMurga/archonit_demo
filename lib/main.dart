@@ -1,7 +1,11 @@
+import 'package:archonit_demo/data/db/db_client.dart';
+import 'package:archonit_demo/data/db/shared_db_client_impl.dart';
+import 'package:archonit_demo/data/repos/local_repo.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'archonit_demo_app.dart';
 import 'data/network/api_client.dart';
@@ -31,11 +35,16 @@ void main() async {
   final ApiClient apiClient = ApiClientDioImpl(dio);
   // final ApiClient apiClient = ApiClientHttpImpl(params);
 
+  // DB
+  final pref = await SharedPreferences.getInstance();
+  final DbClient dbClient = SharedDbClientImpl(pref);
+
   // REPOS
   final NetworkRepo networkRepo = NetworkRepo(apiClient, params);
+  final LocalRepo localRepo = LocalRepo(dbClient);
 
   // USE CASES
-  final CurrencyUseCase currencyUseCase = CurrencyUseCase(networkRepo);
+  final CurrencyUseCase currencyUseCase = CurrencyUseCase(networkRepo, localRepo);
 
   runApp(
     MultiBlocProvider(
