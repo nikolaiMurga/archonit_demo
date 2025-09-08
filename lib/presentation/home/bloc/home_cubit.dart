@@ -1,10 +1,10 @@
+import 'package:archonit_demo/domain/mappers/currency_ui_model_mapper.dart';
 import 'package:archonit_demo/resources/app_strings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../data/network/requests/assets_request.dart';
 import '../../../domain/mixins/random_color_mixin.dart';
-import '../../../domain/models/currency_model.dart';
 import '../../../domain/models/error_model.dart';
 import '../../../domain/ui_models/currencies_ui_model.dart';
 import '../../../domain/use_cases/currency_use_case.dart';
@@ -13,8 +13,9 @@ part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> with RandomColorMixin {
   final CurrencyUseCase _currencyUseCase;
+  final CurrencyUiModelMapper _currencyUiModelMapper;
 
-  HomeCubit(this._currencyUseCase) : super(HomeInitial());
+  HomeCubit(this._currencyUseCase, this._currencyUiModelMapper) : super(HomeInitial());
 
   final List<CurrencyUiModel> _uiModelList = [];
   bool _isLastPage = false;
@@ -48,12 +49,10 @@ class HomeCubit extends Cubit<HomeState> with RandomColorMixin {
       } else {
         _isLastPage = _nextPage == currenciesResponse.totalPages;
         if (!_isLastPage) _nextPage += 1;
+        final modelList = currenciesResponse.currencyModelList;
+        final uiModelList = _currencyUiModelMapper.uiModelListFromModelList(modelList: modelList);
+        _uiModelList.addAll(uiModelList);
 
-        for (CurrencyModel model in currenciesResponse.currencyModelList) {
-          final color = generateRandomColor();
-          final uiModel = CurrencyUiModel(currencyModel: model, color: color);
-          _uiModelList.add(uiModel);
-        }
         emit(HomeSucceed(currencyUiModelList: _uiModelList, isLastPage: _isLastPage));
       }
     } on ErrorModel catch (e) {
