@@ -1,3 +1,4 @@
+import 'package:archonit_demo/domain/mappers/currency_ui_model_mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,7 +12,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (c) => HomeCubit(RepositoryProvider.of<CurrencyUseCase>(c))..getCurrencies(),
+      create: (c) => HomeCubit(
+        RepositoryProvider.of<CurrencyUseCase>(c),
+        RepositoryProvider.of<CurrencyUiModelMapper>(context),
+      )..getCurrencies(),
       child: const HomeScreen(),
     );
   }
