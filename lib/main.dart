@@ -10,6 +10,7 @@ import 'data/network/api_licent_http_impl.dart';
 import 'data/network/endpoints.dart';
 import 'data/network/params.dart';
 import 'data/repos/network_repo.dart';
+import 'domain/mappers/currency_ui_model_mapper.dart';
 import 'domain/use_cases/currency_use_case.dart';
 import 'resources/app_constants.dart';
 import 'resources/app_strings.dart';
@@ -37,10 +38,14 @@ void main() async {
   // USE CASES
   final CurrencyUseCase currencyUseCase = CurrencyUseCase(networkRepo);
 
+  // MAPPERS
+  final CurrencyUiModelMapper currencyUiModelMapper = CurrencyUiModelMapper();
+
   runApp(
     MultiBlocProvider(
       providers: [
         RepositoryProvider<CurrencyUseCase>(create: (c) => currencyUseCase),
+        RepositoryProvider<CurrencyUiModelMapper>(create: (c) => currencyUiModelMapper),
       ],
       child: const ArchonitDemoApp(),
     ),
