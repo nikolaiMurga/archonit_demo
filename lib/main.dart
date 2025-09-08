@@ -4,11 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'archonit_demo_app.dart';
+import 'data/db/db_client.dart';
+import 'data/db/hive_db_client_impl.dart';
+import 'data/db/persistence_helper.dart';
 import 'data/network/api_client.dart';
 import 'data/network/api_client_dio_impl.dart';
 import 'data/network/api_licent_http_impl.dart';
 import 'data/network/endpoints.dart';
 import 'data/network/params.dart';
+import 'data/repos/local_repo.dart';
 import 'data/repos/network_repo.dart';
 import 'domain/mappers/currency_ui_model_mapper.dart';
 import 'domain/use_cases/currency_use_case.dart';
@@ -32,11 +36,19 @@ void main() async {
   final ApiClient apiClient = ApiClientDioImpl(dio);
   // final ApiClient apiClient = ApiClientHttpImpl(params);
 
+  // DB
+  // final pref = await SharedPreferences.getInstance();
+  // final DbClient dbClient = SharedDbClientImpl(pref);
+
+  await PersistenceHelper.initHive();
+  final DbClient dbClient = HiveDbClientImpl();
+
   // REPOS
   final NetworkRepo networkRepo = NetworkRepo(apiClient, params);
+  final LocalRepo localRepo = LocalRepo(dbClient);
 
   // USE CASES
-  final CurrencyUseCase currencyUseCase = CurrencyUseCase(networkRepo);
+  final CurrencyUseCase currencyUseCase = CurrencyUseCase(networkRepo, localRepo);
 
   // MAPPERS
   final CurrencyUiModelMapper currencyUiModelMapper = CurrencyUiModelMapper();
