@@ -19,4 +19,12 @@ class CurrencyUseCase {
   Future<bool> saveFavoritesCurrencies({required List<CurrencyModel> list}) async {
     return await _localRepo.saveFavoriteCurrenciesList(list: list);
   }
+
+  List<CurrencyModel> loadFavoriteCurrencies(){
+    return _localRepo.loadFavoriteCurrenciesList();
+  }
+
+  Future<bool> removeFavoriteCurrenciesList() async {
+    return _localRepo.removeFavoriteCurrenciesList();
+  }
 }

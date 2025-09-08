@@ -1,6 +1,6 @@
 class CurrencyModel {
   final String symbol;
-  final double priceUsd;
+  final String priceUsd;
 
   CurrencyModel({
     required this.symbol,
@@ -9,6 +9,11 @@ class CurrencyModel {
 
   factory CurrencyModel.fromJson(Map<String, dynamic> json) => CurrencyModel(
         symbol: json['symbol'] ?? 'symbol',
-        priceUsd: double.tryParse(json['priceUsd']) ?? 0.00,
+        priceUsd: json['priceUsd'] ?? '0.00',
       );
+
+  Map<String, dynamic> toJson() => {
+        'symbol': symbol,
+        'priceUsd': priceUsd,
+      };
 }

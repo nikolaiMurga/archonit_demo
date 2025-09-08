@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../app/logging_service.dart';
 import '../../domain/models/currency_model.dart';
 
-class SharedDbClientImpl implements DbClient{
+class SharedDbClientImpl implements DbClient {
   final SharedPreferences _pref;
 
   SharedDbClientImpl(this._pref);
@@ -20,7 +20,9 @@ class SharedDbClientImpl implements DbClient{
   //  Favorite Currencies List
   final _favoriteCurrenciesKey = 'favorite_currencies_key';
 
-  Map<String, dynamic> _currModelListToJson(list) => {"list": List<CurrencyModel>.from(list.map((x) => x))};
+  Map<String, dynamic> _currModelListToJson(list) {
+    return {'list': List<CurrencyModel>.from(list.map((x) => x))};
+  }
 
   @override
   Future<bool> saveFavoriteCurrenciesList(List<CurrencyModel> list) async {
@@ -31,7 +33,9 @@ class SharedDbClientImpl implements DbClient{
     return isSet;
   }
 
-  List<CurrencyModel> _currModelListFromJson(json) => List<CurrencyModel>.from(json.map((x) => x));
+  List<CurrencyModel> _currModelListFromJson(json) {
+    return List<CurrencyModel>.from(json['list']!.map((x) => CurrencyModel.fromJson(x)));
+  }
 
   @override
   List<CurrencyModel> loadFavoriteCurrenciesList() {

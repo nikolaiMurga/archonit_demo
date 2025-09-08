@@ -58,4 +58,12 @@ class HomeCubit extends Cubit<HomeState> {
       emit(HomeError(error: e.error ?? AppStrings.noErrorMessage));
     }
   }
+
+  // Future<bool> saveFavoriteCurrencies() async {
+  //   final list = _currencyUiModelMapper.modelListFromUiModelList(uiModelList: _uiModelList);
+  //   final isSaved = await _currencyUseCase.saveFavoritesCurrencies(list: list);
+  //   final modelList = _currencyUseCase.loadFavoriteCurrencies();
+  //   final isRemoved = await _currencyUseCase.removeFavoriteCurrenciesList();
+  //   return isSaved;
+  // }
 }
