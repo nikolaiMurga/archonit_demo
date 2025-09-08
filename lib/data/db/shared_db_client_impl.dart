@@ -20,18 +20,18 @@ class SharedDbClientImpl implements DbClient{
   //  Favorite Currencies List
   final _favoriteCurrenciesKey = 'favorite_currencies_key';
 
-  Map<String, dynamic> _listToJson(list) => {"list": List<CurrencyModel>.from(list.map((x) => x))};
+  Map<String, dynamic> _currModelListToJson(list) => {"list": List<CurrencyModel>.from(list.map((x) => x))};
 
   @override
   Future<bool> saveFavoriteCurrenciesList(List<CurrencyModel> list) async {
-    final json = _listToJson(list);
+    final json = _currModelListToJson(list);
     final jsonString = jsonEncode(json);
     final isSet = await _pref.setString(_favoriteCurrenciesKey, jsonString);
     LogService.addLog('saveFavoriteCurrenciesList succeed is $isSet');
     return isSet;
   }
 
-  List<CurrencyModel> _listFromJson(json) => List<CurrencyModel>.from(json.map((x) => x));
+  List<CurrencyModel> _currModelListFromJson(json) => List<CurrencyModel>.from(json.map((x) => x));
 
   @override
   List<CurrencyModel> loadFavoriteCurrenciesList() {
@@ -39,7 +39,7 @@ class SharedDbClientImpl implements DbClient{
     LogService.addLog('loadFavoriteCurrenciesList succeed $jsonString');
     if (jsonString != null) {
       final json = jsonDecode(jsonString);
-      final list = _listFromJson(json);
+      final list = _currModelListFromJson(json);
       return list;
     }
     return [];
