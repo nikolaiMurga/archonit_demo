@@ -50,7 +50,8 @@ class HomeCubit extends Cubit<HomeState> with RandomColorMixin {
         _isLastPage = _nextPage == currenciesResponse.totalPages;
         if (!_isLastPage) _nextPage += 1;
         final modelList = currenciesResponse.currencyModelList;
-        _uiModelList.addAll(_currencyUiModelMapper.uiModelListFromModelList(modelList: modelList));
+        final uiModelList = _currencyUiModelMapper.uiModelListFromModelList(modelList: modelList);
+        _uiModelList.addAll(uiModelList);
 
         emit(HomeSucceed(currencyUiModelList: _uiModelList, isLastPage: _isLastPage));
       }
