@@ -1,17 +1,16 @@
-import 'package:archonit_demo/domain/mappers/currency_ui_model_mapper.dart';
-import 'package:archonit_demo/resources/app_strings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../data/network/requests/assets_request.dart';
-import '../../../domain/mixins/random_color_mixin.dart';
+import '../../../domain/mappers/currency_ui_model_mapper.dart';
 import '../../../domain/models/error_model.dart';
 import '../../../domain/ui_models/currencies_ui_model.dart';
 import '../../../domain/use_cases/currency_use_case.dart';
+import '../../../resources/app_strings.dart';
 
 part 'home_state.dart';
 
-class HomeCubit extends Cubit<HomeState> with RandomColorMixin {
+class HomeCubit extends Cubit<HomeState> {
   final CurrencyUseCase _currencyUseCase;
   final CurrencyUiModelMapper _currencyUiModelMapper;
 
