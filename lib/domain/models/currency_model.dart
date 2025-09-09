@@ -1,19 +1,13 @@
+import 'package:flutter/material.dart';
+
 class CurrencyModel {
   final String symbol;
   final String priceUsd;
+  final Color color;
 
   CurrencyModel({
     required this.symbol,
     required this.priceUsd,
+    required this.color,
   });
-
-  factory CurrencyModel.fromJson(Map<String, dynamic> json) => CurrencyModel(
-        symbol: json['symbol'] ?? 'symbol',
-        priceUsd: json['priceUsd'] ?? '0.00',
-      );
-
-  Map<String, dynamic> toJson() => {
-        'symbol': symbol,
-        'priceUsd': priceUsd,
-      };
 }

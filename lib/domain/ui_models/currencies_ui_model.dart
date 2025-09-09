@@ -1,13 +1,11 @@
-import 'package:flutter/material.dart';
-
 import '../models/currency_model.dart';
 
 class CurrencyUiModel {
-  final CurrencyModel currencyModel;
-  final Color color;
+  final List<CurrencyModel> currenciesList;
+  final int totalPages;
 
   CurrencyUiModel({
-    required this.currencyModel,
-    required this.color,
+    required this.currenciesList,
+    required this.totalPages,
   });
 }
