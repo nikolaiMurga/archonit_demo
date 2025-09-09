@@ -1,8 +1,8 @@
-import 'package:archonit_demo/domain/models/currency_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../data/network/requests/assets_request.dart';
+import '../../../domain/models/currency_model.dart';
 import '../../../domain/models/error_model.dart';
 import '../../../domain/use_cases/currency_use_case.dart';
 import '../../../resources/app_strings.dart';
@@ -55,9 +55,8 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  // Future<bool> saveFavoriteCurrencies() async {
-  //   final list = _currencyUiModelMapper.modelListFromUiModelList(uiModelList: _uiModelList);
-  //   final isSaved = await _currencyUseCase.saveFavoritesCurrencies(list: list);
+  // Future<bool> _saveFavoriteCurrencies() async {
+  //   final isSaved = await _currencyUseCase.saveFavoritesCurrencies(list: _currenciesList);
   //   final modelList = _currencyUseCase.loadFavoriteCurrencies();
   //   final isRemoved = await _currencyUseCase.removeFavoriteCurrenciesList();
   //   return isSaved;

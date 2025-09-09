@@ -40,7 +40,7 @@ class SharedDbClientImpl implements DbClient {
   @override
   List<CurrencyModel> loadFavoriteCurrenciesList() {
     final jsonString = _pref.getString(_favoriteCurrenciesKey);
-    LogService.addLog('loadFavoriteCurrenciesList succeed $jsonString');
+    LogService.addLog('loadFavoriteCurrenciesList succeed');
     if (jsonString != null) {
       final json = jsonDecode(jsonString);
       final list = _currModelListFromJson(json);

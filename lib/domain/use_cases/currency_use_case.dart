@@ -11,8 +11,7 @@ class CurrencyUseCase {
   final CurrencyMapper _currencyMapper;
   final LocalRepo _localRepo;
 
-  CurrencyUseCase(this._networkRepo, this._currencyMapper);
-  CurrencyUseCase(this._networkRepo, this._localRepo);
+  CurrencyUseCase(this._networkRepo, this._currencyMapper, this._localRepo);
 
   Future<CurrencyUiModel> fetchCurrencies({required CurrenciesRequest request}) async {
     final currenciesResponse = await _networkRepo.fetchCurrenciesResponse(request: request);
