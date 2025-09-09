@@ -71,10 +71,10 @@ class _HomeScreenState extends State<HomeScreen> with SnackBarMixin {
                 physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                 controller: _controller,
                 separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 8),
-                itemCount: state.currencyUiModelList.length + 1,
+                itemCount: state.currenciesList.length + 1,
                 itemBuilder: (context, index) {
-                  if (index < state.currencyUiModelList.length) {
-                    return CurrencyCard(cardModel: state.currencyUiModelList[index]);
+                  if (index < state.currenciesList.length) {
+                    return CurrencyCard(currencyModel: state.currenciesList[index]);
                   } else if (state.isLastPage) {
                     return const SizedBox.shrink();
                   } else {
