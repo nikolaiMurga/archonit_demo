@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:archonit_demo/data/db/db_client.dart';
+import 'package:archonit_demo/domain/mappers/currency_mapper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/logging_service.dart';
@@ -8,8 +9,9 @@ import '../../domain/models/currency_model.dart';
 
 class SharedDbClientImpl implements DbClient {
   final SharedPreferences _pref;
+  final CurrencyMapper _mapper;
 
-  SharedDbClientImpl(this._pref);
+  SharedDbClientImpl(this._pref, this._mapper);
 
   // clear storage
   Future<bool> clearStorage() async {
@@ -21,7 +23,7 @@ class SharedDbClientImpl implements DbClient {
   final _favoriteCurrenciesKey = 'favorite_currencies_key';
 
   Map<String, dynamic> _currModelListToJson(list) {
-    return {'list': List<CurrencyModel>.from(list.map((x) => x))};
+    return {'list' : list.map((m) => _mapper.toJson(m)).toList()};
   }
 
   @override
@@ -34,7 +36,7 @@ class SharedDbClientImpl implements DbClient {
   }
 
   List<CurrencyModel> _currModelListFromJson(json) {
-    return List<CurrencyModel>.from(json['list']!.map((x) => CurrencyModel.fromJson(x)));
+    return List<CurrencyModel>.from(json['list']!.map((j) => _mapper.fromJson(j)));
   }
 
   @override

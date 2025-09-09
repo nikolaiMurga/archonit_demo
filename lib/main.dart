@@ -37,16 +37,18 @@ void main() async {
   final ApiClient apiClient = ApiClientDioImpl(dio);
   // final ApiClient apiClient = ApiClientHttpImpl(params);
 
+  // MAPPERS
+  final CurrencyMapper currencyMapper = CurrencyMapper();
+
   // DB
   final pref = await SharedPreferences.getInstance();
-  final DbClient dbClient = SharedDbClientImpl(pref);
+  final DbClient dbClient = SharedDbClientImpl(pref, currencyMapper);
 
   // REPOS
   final NetworkRepo networkRepo = NetworkRepo(apiClient, params);
   final LocalRepo localRepo = LocalRepo(dbClient);
 
-  // MAPPERS
-  final CurrencyMapper currencyMapper = CurrencyMapper();
+
 
   // USE CASES
   final CurrencyUseCase currencyUseCase = CurrencyUseCase(networkRepo, currencyMapper, localRepo);
