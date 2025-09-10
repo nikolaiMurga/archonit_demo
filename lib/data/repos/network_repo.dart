@@ -1,8 +1,9 @@
 import '../../../data/network/requests/currencies_request.dart';
+import '../network/api_client.dart';
 import '../network/responses/currencies_response.dart';
 
 class NetworkRepo {
-  final dynamic _apiClient;
+  final ApiClient _apiClient;
 
   NetworkRepo(this._apiClient);
 
