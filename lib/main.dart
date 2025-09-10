@@ -32,14 +32,14 @@ void main() async {
   final ApiClient apiClient = ApiClientDioImpl(dio, params);
   // final ApiClient apiClient = ApiClientHttpImpl(params);
 
-  // REPOS
-  final NetworkRepo networkRepo = NetworkRepo(apiClient);
-
   // MAPPERS
   final CurrencyMapper currencyMapper = CurrencyMapper();
 
+  // REPOS
+  final NetworkRepo networkRepo = NetworkRepo(apiClient, currencyMapper);
+
   // USE CASES
-  final CurrencyUseCase currencyUseCase = CurrencyUseCase(networkRepo, currencyMapper);
+  final CurrencyUseCase currencyUseCase = CurrencyUseCase(networkRepo);
 
   runApp(
     MultiBlocProvider(
