@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import '../../data/network/dto/currency_dto.dart';
 import '../../data/network/requests/currencies_request.dart';
 import '../../data/repos/local_repo.dart';
@@ -31,19 +29,11 @@ class CurrencyUseCase {
   }
 
   Future<bool> saveFavoritesCurrencies({required List<CurrencyModel> list}) async {
-    final json = {'list': list.map((m) => _currencyMapper.toJson(m)).toList()};
-    final jsonString = jsonEncode(json);
-    return await _localRepo.saveFavoriteCurrencies(jsonString);
+    return await _localRepo.saveFavoriteCurrencies(list: list);
   }
 
   List<CurrencyModel> loadFavoriteCurrencies() {
-    final jsonString = _localRepo.loadFavoriteCurrencies();
-    if (jsonString != null) {
-      final json = jsonDecode(jsonString);
-      final list = List<CurrencyModel>.from(json['list']!.map((j) => _currencyMapper.fromJson(j)));
-      return list;
-    }
-    return [];
+    return _localRepo.loadFavoriteCurrencies();
   }
 
   Future<bool> removeFavoriteCurrencies() async {

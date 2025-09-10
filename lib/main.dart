@@ -40,12 +40,12 @@ void main() async {
   final pref = await SharedPreferences.getInstance();
   final DbClient dbClient = SharedDbClientImpl(pref);
 
-  // REPOS
-  final NetworkRepo networkRepo = NetworkRepo(apiClient);
-  final LocalRepo localRepo = LocalRepo(dbClient);
-
   // MAPPERS
   final CurrencyMapper currencyMapper = CurrencyMapper();
+
+  // REPOS
+  final NetworkRepo networkRepo = NetworkRepo(apiClient);
+  final LocalRepo localRepo = LocalRepo(dbClient, currencyMapper);
 
   // USE CASES
   final CurrencyUseCase currencyUseCase = CurrencyUseCase(networkRepo, currencyMapper, localRepo);
