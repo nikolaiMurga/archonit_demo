@@ -2,17 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'archonit_demo_app.dart';
-import 'data/db/db_client.dart';
-import 'data/db/shared_db_client_impl.dart';
 import 'data/network/api_client.dart';
 import 'data/network/api_client_dio_impl.dart';
 import 'data/network/api_licent_http_impl.dart';
 import 'data/network/endpoints.dart';
 import 'data/network/params.dart';
-import 'data/repos/local_repo.dart';
 import 'data/repos/network_repo.dart';
 import 'domain/mappers/currency_mapper.dart';
 import 'domain/use_cases/currency_use_case.dart';
@@ -20,7 +16,6 @@ import 'resources/app_constants.dart';
 import 'resources/app_strings.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
 
   // API
@@ -34,7 +29,7 @@ void main() async {
   );
   final Dio dio = Dio(baseOptions);
 
-  final ApiClient apiClient = ApiClientDioImpl(dio);
+  final ApiClient apiClient = ApiClientDioImpl(dio, params);
   // final ApiClient apiClient = ApiClientHttpImpl(params);
 
   // DB
@@ -42,7 +37,7 @@ void main() async {
   final DbClient dbClient = SharedDbClientImpl(pref);
 
   // REPOS
-  final NetworkRepo networkRepo = NetworkRepo(apiClient, params);
+  final NetworkRepo networkRepo = NetworkRepo(apiClient);
   final LocalRepo localRepo = LocalRepo(dbClient);
 
   // MAPPERS

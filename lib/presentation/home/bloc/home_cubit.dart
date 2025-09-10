@@ -1,8 +1,8 @@
+import 'package:archonit_demo/domain/models/currency_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../data/network/requests/assets_request.dart';
-import '../../../domain/models/currency_model.dart';
+import '../../../data/network/requests/currencies_request.dart';
 import '../../../domain/models/error_model.dart';
 import '../../../domain/use_cases/currency_use_case.dart';
 import '../../../resources/app_strings.dart';
