@@ -1,23 +1,24 @@
 import '../../data/network/requests/currencies_request.dart';
 import '../../data/repos/local_repo.dart';
 import '../../data/repos/network_repo.dart';
-import '../mappers/currency_mapper.dart';
+import '../models/currency.dart';
 import '../models/paginated_currencies.dart';
 
 class CurrencyUseCase {
   final NetworkRepo _networkRepo;
+  final LocalRepo _localRepo;
 
-  CurrencyUseCase(this._networkRepo);
+  CurrencyUseCase(this._networkRepo, this._localRepo);
 
   Future<PaginatedCurrencies> fetchCurrencies({required CurrenciesRequest request}) async {
     return await _networkRepo.fetchCurrenciesResponse(request: request);
   }
 
-  Future<bool> saveFavoritesCurrencies({required List<CurrencyModel> list}) async {
+  Future<bool> saveFavoritesCurrencies({required List<Currency> list}) async {
     return await _localRepo.saveFavoriteCurrencies(list: list);
   }
 
-  List<CurrencyModel> loadFavoriteCurrencies() {
+  List<Currency> loadFavoriteCurrencies() {
     return _localRepo.loadFavoriteCurrencies();
   }
 

@@ -1,4 +1,4 @@
-import 'package:archonit_demo/domain/mappers/currency_mapper.dart';
+import 'package:archonit_demo/data/mappers/currency_mapper.dart';
 import 'package:archonit_demo/domain/models/paginated_currencies.dart';
 
 import '../../../data/network/requests/currencies_request.dart';

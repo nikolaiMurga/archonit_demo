@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../data/network/dto/currency_dto.dart';
-import '../mixins/random_color_mixin.dart';
-import '../models/currency.dart';
+import '../network/dto/currency_dto.dart';
+import '../../domain/mixins/random_color_mixin.dart';
+import '../../domain/models/currency.dart';
 
 class CurrencyMapper with RandomColorMixin {
   Currency fromDto(CurrencyDto dto) {
@@ -13,18 +13,18 @@ class CurrencyMapper with RandomColorMixin {
     );
   }
 
-  CurrencyModel fromJson(Map<String, dynamic> json) {
+  Currency fromJson(Map<String, dynamic> json) {
     final hexCode = json['color'].replaceAll('#', '');
     final color = Color(int.parse(hexCode, radix: 16));
 
-    return CurrencyModel(
+    return Currency(
       symbol: json['symbol'],
       priceUsd: json['priceUsd'],
       color: color,
     );
   }
 
-  Map<String, dynamic> toJson(CurrencyModel model) {
+  Map<String, dynamic> toJson(Currency model) {
     return {
       'symbol': model.symbol,
       'priceUsd': model.priceUsd,

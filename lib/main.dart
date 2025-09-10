@@ -14,7 +14,7 @@ import 'data/network/endpoints.dart';
 import 'data/network/params.dart';
 import 'data/repos/local_repo.dart';
 import 'data/repos/network_repo.dart';
-import 'domain/mappers/currency_mapper.dart';
+import 'data/mappers/currency_mapper.dart';
 import 'domain/use_cases/currency_use_case.dart';
 import 'resources/app_constants.dart';
 import 'resources/app_strings.dart';
@@ -44,11 +44,11 @@ void main() async {
   final CurrencyMapper currencyMapper = CurrencyMapper();
 
   // REPOS
-  final NetworkRepo networkRepo = NetworkRepo(apiClient);
+  final NetworkRepo networkRepo = NetworkRepo(apiClient, currencyMapper);
   final LocalRepo localRepo = LocalRepo(dbClient, currencyMapper);
 
   // USE CASES
-  final CurrencyUseCase currencyUseCase = CurrencyUseCase(networkRepo);
+  final CurrencyUseCase currencyUseCase = CurrencyUseCase(networkRepo, localRepo);
 
   runApp(
     MultiBlocProvider(

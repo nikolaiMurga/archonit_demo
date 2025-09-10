@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import '../../domain/mappers/currency_mapper.dart';
-import '../../domain/models/currency_model.dart';
+import '../mappers/currency_mapper.dart';
+import '../../domain/models/currency.dart';
 import '../db/db_client.dart';
 
 class LocalRepo {
@@ -10,17 +10,17 @@ class LocalRepo {
 
   LocalRepo(this._dbClient, this._currencyMapper);
 
-  Future<bool> saveFavoriteCurrencies({required List<CurrencyModel> list}) async {
+  Future<bool> saveFavoriteCurrencies({required List<Currency> list}) async {
     final json = {'list': list.map((m) => _currencyMapper.toJson(m)).toList()};
     final jsonString = jsonEncode(json);
     return await _dbClient.saveFavoriteCurrencies(jsonString);
   }
 
-  List<CurrencyModel> loadFavoriteCurrencies() {
+  List<Currency> loadFavoriteCurrencies() {
     final jsonString = _dbClient.loadFavoriteCurrencies();
     if (jsonString != null) {
       final json = jsonDecode(jsonString);
-      final list = List<CurrencyModel>.from(json['list']!.map((j) => _currencyMapper.fromJson(j)));
+      final list = List<Currency>.from(json['list']!.map((j) => _currencyMapper.fromJson(j)));
       return list;
     }
     return [];
