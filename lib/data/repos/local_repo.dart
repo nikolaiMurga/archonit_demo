@@ -1,4 +1,3 @@
-import '../../domain/models/currency_model.dart';
 import '../db/db_client.dart';
 
 class LocalRepo {
@@ -6,11 +5,11 @@ class LocalRepo {
 
   LocalRepo(this._dbClient);
 
-  Future<bool> saveFavoriteCurrenciesList({required List<CurrencyModel> list}) async {
-    return await _dbClient.saveFavoriteCurrenciesList(list);
+  Future<bool> saveFavoriteCurrenciesList(String jsonString) async {
+    return await _dbClient.saveFavoriteCurrenciesList(jsonString);
   }
 
-  List<CurrencyModel> loadFavoriteCurrenciesList() {
+  String? loadFavoriteCurrenciesList() {
     return _dbClient.loadFavoriteCurrenciesList();
   }
 

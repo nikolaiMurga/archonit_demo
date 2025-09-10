@@ -55,10 +55,10 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  Future<bool> _saveFavoriteCurrencies() async {
-    final isSaved = await _currencyUseCase.saveFavoritesCurrencies(list: _currenciesList);
-    final modelList = _currencyUseCase.loadFavoriteCurrencies();
-    final isRemoved = await _currencyUseCase.removeFavoriteCurrenciesList();
-    return isSaved;
-  }
+  // Future<bool> _saveFavoriteCurrencies() async {
+  //   final isSaved = await _currencyUseCase.saveFavoritesCurrencies(list: _currenciesList);
+  //   final modelList = _currencyUseCase.loadFavoriteCurrencies();
+  //   final isRemoved = await _currencyUseCase.removeFavoriteCurrenciesList();
+  //   return isSaved;
+  // }
 }
