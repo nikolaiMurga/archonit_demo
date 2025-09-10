@@ -18,21 +18,21 @@ class SharedDbClientImpl implements DbClient {
   final _favoriteCurrenciesKey = 'favorite_currencies_key';
 
   @override
-  Future<bool> saveFavoriteCurrenciesList(String jsonString) async {
+  Future<bool> saveFavoriteCurrencies(String jsonString) async {
     final isSet =  await _pref.setString(_favoriteCurrenciesKey, jsonString);
     LogService.addLog('saveFavoriteCurrenciesList succeed is $isSet');
     return isSet;
   }
 
   @override
-  String? loadFavoriteCurrenciesList() {
+  String? loadFavoriteCurrencies() {
     final jsonString =  _pref.getString(_favoriteCurrenciesKey);
     LogService.addLog('loadFavoriteCurrenciesList succeed is $jsonString');
     return jsonString;
   }
 
   @override
-  Future<bool> removeFavoriteCurrenciesList() async {
+  Future<bool> removeFavoriteCurrencies() async {
     final isRemoved =  await _pref.remove(_favoriteCurrenciesKey);
     LogService.addLog('removeFavoriteCurrenciesList succeed is $isRemoved');
     return isRemoved;

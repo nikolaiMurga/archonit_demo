@@ -1,7 +1,7 @@
 abstract class DbClient {
-  Future<bool> saveFavoriteCurrenciesList(String jsonString);
+  Future<bool> saveFavoriteCurrencies(String jsonString);
 
-  String? loadFavoriteCurrenciesList();
+  String? loadFavoriteCurrencies();
 
-  Future<bool> removeFavoriteCurrenciesList();
+  Future<bool> removeFavoriteCurrencies();
 }

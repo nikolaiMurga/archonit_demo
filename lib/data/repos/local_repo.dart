@@ -5,15 +5,15 @@ class LocalRepo {
 
   LocalRepo(this._dbClient);
 
-  Future<bool> saveFavoriteCurrenciesList(String jsonString) async {
-    return await _dbClient.saveFavoriteCurrenciesList(jsonString);
+  Future<bool> saveFavoriteCurrencies(String jsonString) async {
+    return await _dbClient.saveFavoriteCurrencies(jsonString);
   }
 
-  String? loadFavoriteCurrenciesList() {
-    return _dbClient.loadFavoriteCurrenciesList();
+  String? loadFavoriteCurrencies() {
+    return _dbClient.loadFavoriteCurrencies();
   }
 
-  Future<bool> removeFavoriteCurrenciesList() async {
-    return await _dbClient.removeFavoriteCurrenciesList();
+  Future<bool> removeFavoriteCurrencies() async {
+    return await _dbClient.removeFavoriteCurrencies();
   }
 }

@@ -33,11 +33,11 @@ class CurrencyUseCase {
   Future<bool> saveFavoritesCurrencies({required List<CurrencyModel> list}) async {
     final json = {'list': list.map((m) => _currencyMapper.toJson(m)).toList()};
     final jsonString = jsonEncode(json);
-    return await _localRepo.saveFavoriteCurrenciesList(jsonString);
+    return await _localRepo.saveFavoriteCurrencies(jsonString);
   }
 
   List<CurrencyModel> loadFavoriteCurrencies() {
-    final jsonString = _localRepo.loadFavoriteCurrenciesList();
+    final jsonString = _localRepo.loadFavoriteCurrencies();
     if (jsonString != null) {
       final json = jsonDecode(jsonString);
       final list = List<CurrencyModel>.from(json['list']!.map((j) => _currencyMapper.fromJson(j)));
@@ -46,7 +46,7 @@ class CurrencyUseCase {
     return [];
   }
 
-  Future<bool> removeFavoriteCurrenciesList() async {
-    return _localRepo.removeFavoriteCurrenciesList();
+  Future<bool> removeFavoriteCurrencies() async {
+    return _localRepo.removeFavoriteCurrencies();
   }
 }
