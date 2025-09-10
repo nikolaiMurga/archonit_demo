@@ -22,12 +22,16 @@ class ApiClientHttpImpl with HttpExceptionMixin implements ApiClient {
     );
   }
 
+  Map<String, dynamic> _decoder(http.Response resp) {
+    final body = utf8.decode(resp.bodyBytes);
+    final data = jsonDecode(body);
+    return data;
+  }
+
   @override
   Future<Map<String, dynamic>> fetchCurrenciesResponse({required CurrenciesRequest request}) async {
     final queryString = Uri(queryParameters: _params.getCurrenciesRequestQueryParams(request: request));
     final resp = await _get(url: '${Endpoints.baseUrl}${Endpoints.fetchAssets}$queryString');
-    final body = utf8.decode(resp.bodyBytes);
-    final data = jsonDecode(body);
-    return data;
+    return _decoder(resp);
   }
 }
