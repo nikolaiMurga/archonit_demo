@@ -1,3 +1,5 @@
+import '../../../data/network/requests/currencies_request.dart';
+
 abstract class ApiClient {
-  Future<Map<String, dynamic>> get({required String endpoint, required Map<String, dynamic> queryParams});
+  Future<Map<String, dynamic>> fetchCurrenciesResponse({required CurrenciesRequest request});
 }

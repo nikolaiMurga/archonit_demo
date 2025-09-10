@@ -1,4 +1,4 @@
-import '../dtos/currency_dto.dart';
+import '../dto/currency_dto.dart';
 
 class CurrenciesResponse {
   final List<CurrencyDto> dtoList;
