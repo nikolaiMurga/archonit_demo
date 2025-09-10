@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class CurrencyModel {
+class Currency {
   final String symbol;
   final double priceUsd;
   final Color color;
 
-  CurrencyModel({
+  Currency({
     required this.symbol,
     required this.priceUsd,
     required this.color,

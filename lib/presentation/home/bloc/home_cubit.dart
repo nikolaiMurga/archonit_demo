@@ -1,8 +1,8 @@
-import 'package:archonit_demo/domain/models/currency_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../data/network/requests/currencies_request.dart';
+import '../../../domain/models/currency.dart';
 import '../../../domain/models/error_model.dart';
 import '../../../domain/use_cases/currency_use_case.dart';
 import '../../../resources/app_strings.dart';
@@ -14,7 +14,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   HomeCubit(this._currencyUseCase) : super(HomeInitial());
 
-  final List<CurrencyModel> _currenciesList = [];
+  final List<Currency> _currenciesList = [];
   bool _isLastPage = false;
   int _nextPage = 0;
 
@@ -33,21 +33,20 @@ class HomeCubit extends Cubit<HomeState> {
     } else {
       emit(HomeScroll());
     }
-    _fetchCurrencyUiModelList();
+    _fetchPaginatedCurrencies();
   }
 
-  Future<void> _fetchCurrencyUiModelList() async {
+  Future<void> _fetchPaginatedCurrencies() async {
     try {
       final request = CurrenciesRequest(page: _nextPage);
-      final uiModel = await _currencyUseCase.fetchCurrencies(request: request);
+      final paginatedCurrencies = await _currencyUseCase.fetchCurrencies(request: request);
 
-      if (uiModel.currenciesList.isEmpty) {
+      if (paginatedCurrencies.currenciesList.isEmpty) {
         emit(HomeEmpty());
       } else {
-        _isLastPage = _nextPage == uiModel.totalPages;
+        _isLastPage = _nextPage == paginatedCurrencies.totalPages;
         if (!_isLastPage) _nextPage += 1;
-        _currenciesList.addAll(uiModel.currenciesList);
-
+        _currenciesList.addAll(paginatedCurrencies.currenciesList);
         emit(HomeSucceed(currenciesList: _currenciesList, isLastPage: _isLastPage));
       }
     } on ErrorModel catch (e) {
