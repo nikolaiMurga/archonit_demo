@@ -1,9 +1,14 @@
-import 'package:archonit_demo/data/db/db_client.dart';
-import 'package:archonit_demo/domain/models/currency_model.dart';
+import 'package:hive/hive.dart';
+
+import '../../app/logging_service.dart';
+import 'db_client.dart';
+import 'persistence_helper.dart';
 
 class HiveDbClientImpl implements DbClient {
+  final _favoritesCurrenciesKey = 'favorites_currencies_key';
+
   @override
-  List<CurrencyModel> loadFavoriteCurrenciesList() {
+  String? loadFavoriteCurrenciesList() {
     // TODO: implement loadFavoriteCurrenciesList
     throw UnimplementedError();
   }
@@ -15,9 +20,9 @@ class HiveDbClientImpl implements DbClient {
   }
 
   @override
-  Future<bool> saveFavoriteCurrenciesList(List<CurrencyModel> list) {
-    // TODO: implement saveFavoriteCurrenciesList
-    throw UnimplementedError();
+  Future<bool> saveFavoriteCurrenciesList(String jsonString) async {
+    await Hive.box(HiveBoxes.favoriteCurrenciesBox).put(_favoritesCurrenciesKey, jsonString);
+    LogService.addLog('saveFavoriteCurrenciesList succeed is true');
+    return true;
   }
-
 }

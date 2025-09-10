@@ -5,9 +5,9 @@ class HiveBoxes {
   static const favoriteCurrenciesBox = 'favorite_currencies_box';
 }
 
-class HiveTypeIds {
-  static const workingStatus = 0;
-}
+// class HiveTypeIds {
+//   static const workingStatus = 0;
+// }
 
 class PersistenceHelper {
   static Future<void> initHive() async {
