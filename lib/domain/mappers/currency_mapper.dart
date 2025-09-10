@@ -9,7 +9,7 @@ class CurrencyMapper with RandomColorMixin {
     final color = generateRandomColor();
     return CurrencyModel(
       symbol: dto.symbol ?? 'symbol',
-      priceUsd: dto.priceUsd ?? '0.00',
+      priceUsd: double.parse(dto.priceUsd ?? '0.00'),
       color: color,
     );
   }

@@ -26,7 +26,7 @@ class CurrencyCard extends StatelessWidget {
               child: Text(currencyModel.symbol, style: AppTextStyles.text16w600),
             ),
             const Expanded(child: SizedBox()),
-            Text('\$${double.parse(currencyModel.priceUsd).toStringAsFixed(2)}', style: AppTextStyles.text16w600),
+            Text('\$${currencyModel.priceUsd.toStringAsFixed(2)}', style: AppTextStyles.text16w600),
           ],
         ),
       ),
