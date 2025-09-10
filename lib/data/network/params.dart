@@ -1,4 +1,4 @@
-import 'requests/assets_request.dart';
+import '../../../data/network/requests/currencies_request.dart';
 
 class Params {
   static Params? _instance;

@@ -1,4 +1,4 @@
-import '../../data/network/dtos/currency_dto.dart';
+import '../../data/network/dto/currency_dto.dart';
 import '../mixins/random_color_mixin.dart';
 import '../models/currency_model.dart';
 

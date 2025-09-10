@@ -29,11 +29,11 @@ void main() async {
   );
   final Dio dio = Dio(baseOptions);
 
-  final ApiClient apiClient = ApiClientDioImpl(dio);
+  final ApiClient apiClient = ApiClientDioImpl(dio, params);
   // final ApiClient apiClient = ApiClientHttpImpl(params);
 
   // REPOS
-  final NetworkRepo networkRepo = NetworkRepo(apiClient, params);
+  final NetworkRepo networkRepo = NetworkRepo(apiClient);
 
   // MAPPERS
   final CurrencyMapper currencyMapper = CurrencyMapper();
