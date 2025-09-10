@@ -47,7 +47,7 @@ class HomeCubit extends Cubit<HomeState> {
         _isLastPage = _nextPage == uiModel.totalPages;
         if (!_isLastPage) _nextPage += 1;
         _currenciesList.addAll(uiModel.currenciesList);
-
+        // await _saveFavoriteCurrencies();
         emit(HomeSucceed(currenciesList: _currenciesList, isLastPage: _isLastPage));
       }
     } on ErrorModel catch (e) {
@@ -55,10 +55,10 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  // Future<bool> _saveFavoriteCurrencies() async {
-  //   final isSaved = await _currencyUseCase.saveFavoritesCurrencies(list: _currenciesList);
-  //   final modelList = _currencyUseCase.loadFavoriteCurrencies();
-  //   final isRemoved = await _currencyUseCase.removeFavoriteCurrenciesList();
-  //   return isSaved;
-  // }
+  Future<bool> _saveFavoriteCurrencies() async {
+    final isSaved = await _currencyUseCase.saveFavoritesCurrencies(list: _currenciesList);
+    final modelList = _currencyUseCase.loadFavoriteCurrencies();
+    final isRemoved = await _currencyUseCase.removeFavoriteCurrenciesList();
+    return isSaved;
+  }
 }
