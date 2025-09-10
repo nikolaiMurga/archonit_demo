@@ -48,7 +48,7 @@ void main() async {
   final LocalRepo localRepo = LocalRepo(dbClient, currencyMapper);
 
   // USE CASES
-  final CurrencyUseCase currencyUseCase = CurrencyUseCase(networkRepo, currencyMapper, localRepo);
+  final CurrencyUseCase currencyUseCase = CurrencyUseCase(networkRepo);
 
   runApp(
     MultiBlocProvider(

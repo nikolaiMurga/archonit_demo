@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> with SnackBarMixin {
                 itemCount: state.currenciesList.length + 1,
                 itemBuilder: (context, index) {
                   if (index < state.currenciesList.length) {
-                    return CurrencyCard(currencyModel: state.currenciesList[index]);
+                    return CurrencyCard(currency: state.currenciesList[index]);
                   } else if (state.isLastPage) {
                     return const SizedBox.shrink();
                   } else {

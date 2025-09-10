@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/models/currency_model.dart';
+import '../../../domain/models/currency.dart';
 import '../../../resources/app_test_styles.dart';
 
 class CurrencyCard extends StatelessWidget {
-  final CurrencyModel currencyModel;
+  final Currency currency;
 
-  const CurrencyCard({super.key, required this.currencyModel});
+  const CurrencyCard({super.key, required this.currency});
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +19,14 @@ class CurrencyCard extends StatelessWidget {
             Container(
               height: 56,
               width: 56,
-              decoration: BoxDecoration(color: currencyModel.color, borderRadius: BorderRadius.circular(18)),
+              decoration: BoxDecoration(color: currency.color, borderRadius: BorderRadius.circular(18)),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 16.0),
-              child: Text(currencyModel.symbol, style: AppTextStyles.text16w600),
+              child: Text(currency.symbol, style: AppTextStyles.text16w600),
             ),
             const Expanded(child: SizedBox()),
-            Text('\$${currencyModel.priceUsd.toStringAsFixed(2)}', style: AppTextStyles.text16w600),
+            Text('\$${currency.priceUsd.toStringAsFixed(2)}', style: AppTextStyles.text16w600),
           ],
         ),
       ),
