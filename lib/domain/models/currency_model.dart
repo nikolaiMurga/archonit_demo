@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CurrencyModel {
   final String symbol;
-  final String priceUsd;
+  final double priceUsd;
   final Color color;
 
   CurrencyModel({
