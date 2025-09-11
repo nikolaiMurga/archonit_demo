@@ -14,17 +14,14 @@ class NetworkRepo {
   NetworkRepo(this._apiClient, this._currencyMapper);
 
   Future<PaginatedCurrencies> fetchCurrenciesResponse({required CurrenciesRequest request}) async {
-    final data = await _apiClient.fetchCurrenciesResponse(request: request);
-    final resp = CurrenciesResponse.fromJson(data);
-    final dtoList = resp.dtoList;
-
+    final response = await _apiClient.fetchCurrenciesResponse(request: request);
+    final dtoList = response.dtoList;
     final currenciesList = <Currency>[];
-
     if (dtoList.isNotEmpty) {
       for (CurrencyDto dto in dtoList) {
         currenciesList.add(_currencyMapper.fromDto(dto));
       }
     }
-    return PaginatedCurrencies(currenciesList: currenciesList, totalPages: resp.totalPages);
+    return PaginatedCurrencies(currenciesList: currenciesList, totalPages: response.totalPages);
   }
 }
