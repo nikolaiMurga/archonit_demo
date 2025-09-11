@@ -1,19 +1,27 @@
-import 'package:archonit_demo/data/network/endpoints.dart';
+import 'package:archonit_demo/data/mappers/currency_mapper.dart';
+import 'package:archonit_demo/domain/models/paginated_currencies.dart';
 
+import '../../../data/network/requests/currencies_request.dart';
+import '../../domain/models/currency.dart';
 import '../network/api_client.dart';
-import '../network/params.dart';
-import '../network/requests/assets_request.dart';
-import '../network/responses/assets_response.dart';
+import '../network/dto/currency_dto.dart';
+import '../network/responses/currencies_response.dart';
 
 class NetworkRepo {
   final ApiClient _apiClient;
-  final Params _params;
+  final CurrencyMapper _currencyMapper;
 
-  NetworkRepo(this._apiClient, this._params);
+  NetworkRepo(this._apiClient, this._currencyMapper);
 
-  Future<CurrenciesResponse> fetchCurrenciesResponse({required CurrenciesRequest request}) async {
-    final queryParams = _params.getCurrenciesRequestQueryParams(request: request);
-    final data = await _apiClient.get(endpoint: Endpoints.fetchAssets, queryParams: queryParams);
-    return CurrenciesResponse.fromJson(data);
+  Future<PaginatedCurrencies> fetchCurrenciesResponse({required CurrenciesRequest request}) async {
+    final response = await _apiClient.fetchCurrenciesResponse(request: request);
+    final dtoList = response.dtoList;
+    final currenciesList = <Currency>[];
+    if (dtoList.isNotEmpty) {
+      for (CurrencyDto dto in dtoList) {
+        currenciesList.add(_currencyMapper.fromDto(dto));
+      }
+    }
+    return PaginatedCurrencies(currenciesList: currenciesList, totalPages: response.totalPages);
   }
 }

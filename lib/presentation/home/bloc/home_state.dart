@@ -15,13 +15,13 @@ final class HomeLoading extends HomeState {
 }
 
 final class HomeSucceed extends HomeState {
-  final List<CurrencyUiModel> currencyUiModelList;
+  final List<Currency> currenciesList;
   final bool isLastPage;
 
-  const HomeSucceed({required this.currencyUiModelList, required this.isLastPage});
+  const HomeSucceed({required this.currenciesList, required this.isLastPage});
 
   @override
-  List<Object> get props => [currencyUiModelList, isLastPage];
+  List<Object> get props => [currenciesList, isLastPage];
 }
 
 final class HomeError extends HomeState {

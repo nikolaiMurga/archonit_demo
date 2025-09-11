@@ -8,6 +8,8 @@ import '../../resources/app_strings.dart';
 import 'api_client.dart';
 import 'endpoints.dart';
 import 'params.dart';
+import '../../../data/network/requests/currencies_request.dart';
+import 'responses/currencies_response.dart';
 
 class ApiClientHttpImpl with HttpExceptionMixin implements ApiClient {
   final Params _params;
@@ -15,14 +17,23 @@ class ApiClientHttpImpl with HttpExceptionMixin implements ApiClient {
   ApiClientHttpImpl(this._params);
 
   // GET
-  @override
-  Future<Map<String, dynamic>> get({required String endpoint, required Map<String, dynamic> queryParams}) async {
-    final queryString = Uri(queryParameters: queryParams);
-    final url = '${Endpoints.baseUrl}$endpoint$queryString';
-    final call = http.get(Uri.parse(url), headers: _params.getHeaders(token: dotenv.env[AppStrings.apiToken]));
-    final resp = await handleResponseStatus(apiCall: call);
+  Future<http.Response> _get({required String url}) async {
+    return await handleResponseStatus(
+      apiCall: http.get(Uri.parse(url), headers: _params.getHeaders(token: dotenv.env[AppStrings.apiToken])),
+    );
+  }
+
+  Map<String, dynamic> _decoder(http.Response resp) {
     final body = utf8.decode(resp.bodyBytes);
     final data = jsonDecode(body);
     return data;
+  }
+
+  @override
+  Future<CurrenciesResponse> fetchCurrenciesResponse({required CurrenciesRequest request}) async {
+    final queryString = Uri(queryParameters: _params.getCurrenciesRequestQueryParams(request: request));
+    final resp = await _get(url: '${Endpoints.baseUrl}${Endpoints.fetchAssets}$queryString');
+    final data = _decoder(resp);
+    return CurrenciesResponse.fromJson(data);
   }
 }

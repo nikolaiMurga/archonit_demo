@@ -1,19 +1,32 @@
+import 'dart:convert';
+
+import '../mappers/currency_mapper.dart';
+import '../../domain/models/currency.dart';
 import '../db/db_client.dart';
 
 class LocalRepo {
   final DbClient _dbClient;
+  final CurrencyMapper _currencyMapper;
 
-  LocalRepo(this._dbClient);
+  LocalRepo(this._dbClient, this._currencyMapper);
 
-  Future<bool> saveFavoriteCurrenciesList(String jsonString) async {
-    return await _dbClient.saveFavoriteCurrenciesList(jsonString);
+  Future<bool> saveFavoriteCurrencies({required List<Currency> list}) async {
+    final json = {'list': list.map((m) => _currencyMapper.toJson(m)).toList()};
+    final jsonString = jsonEncode(json);
+    return await _dbClient.saveFavoriteCurrencies(jsonString);
   }
 
-  String? loadFavoriteCurrenciesList() {
-    return _dbClient.loadFavoriteCurrenciesList();
+  List<Currency> loadFavoriteCurrencies() {
+    final jsonString = _dbClient.loadFavoriteCurrencies();
+    if (jsonString != null) {
+      final json = jsonDecode(jsonString);
+      final list = List<Currency>.from(json['list']!.map((j) => _currencyMapper.fromJson(j)));
+      return list;
+    }
+    return [];
   }
 
-  Future<bool> removeFavoriteCurrenciesList() async {
-    return await _dbClient.removeFavoriteCurrenciesList();
+  Future<bool> removeFavoriteCurrencies() async {
+    return await _dbClient.removeFavoriteCurrencies();
   }
 }
