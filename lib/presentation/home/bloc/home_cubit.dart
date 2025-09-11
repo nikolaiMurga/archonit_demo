@@ -47,10 +47,18 @@ class HomeCubit extends Cubit<HomeState> {
         _isLastPage = _nextPage == paginatedCurrencies.totalPages;
         if (!_isLastPage) _nextPage += 1;
         _currenciesList.addAll(paginatedCurrencies.currenciesList);
+        // await _saveFavoriteCurrencies();
         emit(HomeSucceed(currenciesList: _currenciesList, isLastPage: _isLastPage));
       }
     } on ErrorModel catch (e) {
       emit(HomeError(error: e.error ?? AppStrings.noErrorMessage));
     }
   }
+
+  // Future<bool> _saveFavoriteCurrencies() async {
+  //   final isSaved = await _currencyUseCase.saveFavoritesCurrencies(list: _currenciesList);
+  //   final modelList = _currencyUseCase.loadFavoriteCurrencies();
+  //   final isRemoved = await _currencyUseCase.removeFavoriteCurrencies();
+  //   return isSaved;
+  // }
 }
