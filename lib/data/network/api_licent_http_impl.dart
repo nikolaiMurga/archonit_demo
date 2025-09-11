@@ -9,6 +9,7 @@ import 'api_client.dart';
 import 'endpoints.dart';
 import 'params.dart';
 import '../../../data/network/requests/currencies_request.dart';
+import 'responses/currencies_response.dart';
 
 class ApiClientHttpImpl with HttpExceptionMixin implements ApiClient {
   final Params _params;
@@ -29,9 +30,10 @@ class ApiClientHttpImpl with HttpExceptionMixin implements ApiClient {
   }
 
   @override
-  Future<Map<String, dynamic>> fetchCurrenciesResponse({required CurrenciesRequest request}) async {
+  Future<CurrenciesResponse> fetchCurrenciesResponse({required CurrenciesRequest request}) async {
     final queryString = Uri(queryParameters: _params.getCurrenciesRequestQueryParams(request: request));
     final resp = await _get(url: '${Endpoints.baseUrl}${Endpoints.fetchAssets}$queryString');
-    return _decoder(resp);
+    final data = _decoder(resp);
+    return CurrenciesResponse.fromJson(data);
   }
 }
