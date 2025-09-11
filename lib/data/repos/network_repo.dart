@@ -5,7 +5,6 @@ import '../../../data/network/requests/currencies_request.dart';
 import '../../domain/models/currency.dart';
 import '../network/api_client.dart';
 import '../network/dto/currency_dto.dart';
-import '../network/responses/currencies_response.dart';
 
 class NetworkRepo {
   final ApiClient _apiClient;

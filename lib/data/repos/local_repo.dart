@@ -16,8 +16,8 @@ class LocalRepo {
     return await _dbClient.saveFavoriteCurrencies(jsonString);
   }
 
-  List<Currency> loadFavoriteCurrencies() {
-    final jsonString = _dbClient.loadFavoriteCurrencies();
+  Future<List<Currency>> loadFavoriteCurrencies() async{
+    final jsonString = await _dbClient.loadFavoriteCurrencies();
     if (jsonString != null) {
       final json = jsonDecode(jsonString);
       final list = List<Currency>.from(json['list']!.map((j) => _currencyMapper.fromJson(j)));

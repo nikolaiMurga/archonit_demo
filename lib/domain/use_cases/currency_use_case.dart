@@ -18,8 +18,8 @@ class CurrencyUseCase {
     return await _localRepo.saveFavoriteCurrencies(list: list);
   }
 
-  List<Currency> loadFavoriteCurrencies() {
-    return _localRepo.loadFavoriteCurrencies();
+  Future<List<Currency>> loadFavoriteCurrencies() async {
+    return await _localRepo.loadFavoriteCurrencies();
   }
 
   Future<bool> removeFavoriteCurrencies() async {

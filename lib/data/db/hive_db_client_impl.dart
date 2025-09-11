@@ -8,15 +8,15 @@ class HiveDbClientImpl implements DbClient {
   final _favoritesCurrenciesKey = 'favorites_currencies_key';
 
   @override
-  String? loadFavoriteCurrencies() {
-    // TODO: implement loadFavoriteCurrenciesList
-    throw UnimplementedError();
+  Future<String?> loadFavoriteCurrencies() async {
+    final jsonString = await Hive.box(HiveBoxes.favoriteCurrenciesBox).get(_favoritesCurrenciesKey);
+    return jsonString;
   }
 
   @override
-  Future<bool> removeFavoriteCurrencies() {
-    // TODO: implement removeFavoriteCurrenciesList
-    throw UnimplementedError();
+  Future<bool> removeFavoriteCurrencies() async {
+    await Hive.box(HiveBoxes.favoriteCurrenciesBox).delete(_favoritesCurrenciesKey);
+    return true;
   }
 
   @override
