@@ -18,7 +18,7 @@ class ApiClientHttpImpl with HttpExceptionMixin implements ApiClient {
 
   // GET
   Future<http.Response> _get({required String url}) async {
-    return await handleResponseStatus(
+    return handleResponseStatus(
       apiCall: http.get(Uri.parse(url), headers: _params.getHeaders(token: dotenv.env[AppStrings.apiToken])),
     );
   }

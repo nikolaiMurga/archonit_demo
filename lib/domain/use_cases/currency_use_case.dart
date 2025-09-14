@@ -11,15 +11,15 @@ class CurrencyUseCase {
   CurrencyUseCase(this._networkRepo, this._localRepo);
 
   Future<PaginatedCurrencies> fetchCurrencies({required CurrenciesRequest request}) async {
-    return await _networkRepo.fetchCurrenciesResponse(request: request);
+    return _networkRepo.fetchCurrenciesResponse(request: request);
   }
 
   Future<bool> saveFavoritesCurrencies({required List<Currency> list}) async {
-    return await _localRepo.saveFavoriteCurrencies(list: list);
+    return _localRepo.saveFavoriteCurrencies(list: list);
   }
 
   Future<List<Currency>> loadFavoriteCurrencies() async {
-    return await _localRepo.loadFavoriteCurrencies();
+    return _localRepo.loadFavoriteCurrencies();
   }
 
   Future<bool> removeFavoriteCurrencies() async {

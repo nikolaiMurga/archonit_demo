@@ -48,9 +48,10 @@ mixin DioExceptionMixin {
     }
   }
 
-  Future<dynamic> dioExceptionHandle({required Future<dynamic> apiCall}) async {
+  Future<Response> dioExceptionHandle({required Future<dynamic> apiCall}) async {
     try {
-      return await apiCall;
+      final resp = await apiCall;
+      return resp;
     } on DioException catch (e) {
       throw _mapDioException(e);
     }
