@@ -1,15 +1,14 @@
 import 'dart:convert';
 
+import 'package:archonit_demo/data/network/api_client.dart';
+import 'package:archonit_demo/data/network/endpoints.dart';
+import 'package:archonit_demo/data/network/params.dart';
+import 'package:archonit_demo/data/network/requests/currencies_request.dart';
+import 'package:archonit_demo/data/network/responses/currencies_response.dart';
+import 'package:archonit_demo/domain/mixins/http_exception_mixin.dart';
+import 'package:archonit_demo/resources/app_strings.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-
-import '../../domain/mixins/http_exception_mixin.dart';
-import '../../resources/app_strings.dart';
-import 'api_client.dart';
-import 'endpoints.dart';
-import 'params.dart';
-import '../../../data/network/requests/currencies_request.dart';
-import 'responses/currencies_response.dart';
 
 class ApiClientHttpImpl with HttpExceptionMixin implements ApiClient {
   final Params _params;

@@ -1,8 +1,7 @@
 import 'dart:math';
 
+import 'package:archonit_demo/resources/app_constants.dart';
 import 'package:flutter/material.dart';
-
-import '../../resources/app_constants.dart';
 
 mixin RandomColorMixin {
   Random random = Random();

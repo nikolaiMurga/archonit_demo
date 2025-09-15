@@ -1,8 +1,7 @@
+import 'package:archonit_demo/resources/app_images.dart';
+import 'package:archonit_demo/resources/app_strings.dart';
+import 'package:archonit_demo/resources/app_test_styles.dart';
 import 'package:flutter/material.dart';
-
-import '../../../resources/app_images.dart';
-import '../../../resources/app_strings.dart';
-import '../../../resources/app_test_styles.dart';
 
 class EmptyStateWidget extends StatelessWidget {
   const EmptyStateWidget({super.key});

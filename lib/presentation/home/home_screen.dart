@@ -1,11 +1,10 @@
 import 'package:archonit_demo/domain/mixins/snack_bar_mixin.dart';
+import 'package:archonit_demo/presentation/common/helpers/loading_indicator.dart';
+import 'package:archonit_demo/presentation/home/bloc/home_cubit.dart';
+import 'package:archonit_demo/presentation/home/widgets/currency_card.dart';
+import 'package:archonit_demo/presentation/home/widgets/empty_state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../common/helpers/loading_indicator.dart';
-import 'bloc/home_cubit.dart';
-import 'widgets/currency_card.dart';
-import 'widgets/empty_state_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

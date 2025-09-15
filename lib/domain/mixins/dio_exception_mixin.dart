@@ -1,8 +1,6 @@
+import 'package:archonit_demo/domain/models/error_model.dart';
+import 'package:archonit_demo/resources/app_strings.dart';
 import 'package:dio/dio.dart';
-
-import '../../resources/app_strings.dart';
-import '../models/error_model.dart';
-
 
 mixin DioExceptionMixin {
   ErrorModel _mapDioException(DioException e) {

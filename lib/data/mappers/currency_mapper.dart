@@ -1,7 +1,7 @@
+import 'package:archonit_demo/data/network/dto/currency_dto.dart';
+import 'package:archonit_demo/domain/mixins/random_color_mixin.dart';
+import 'package:archonit_demo/domain/models/currency.dart';
 import 'package:flutter/material.dart';
-import '../network/dto/currency_dto.dart';
-import '../../domain/mixins/random_color_mixin.dart';
-import '../../domain/models/currency.dart';
 
 class CurrencyMapper with RandomColorMixin {
   Currency fromDto(CurrencyDto dto) {

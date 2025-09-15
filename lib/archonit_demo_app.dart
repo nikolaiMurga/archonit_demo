@@ -1,7 +1,6 @@
+import 'package:archonit_demo/presentation/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'presentation/home/home_page.dart';
 
 class ArchonitDemoApp extends StatelessWidget {
   const ArchonitDemoApp({super.key});

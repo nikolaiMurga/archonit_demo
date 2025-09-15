@@ -1,8 +1,8 @@
-import '../../data/network/requests/currencies_request.dart';
-import '../../data/repos/local_repo.dart';
-import '../../data/repos/network_repo.dart';
-import '../models/currency.dart';
-import '../models/paginated_currencies.dart';
+import 'package:archonit_demo/data/network/requests/currencies_request.dart';
+import 'package:archonit_demo/data/repos/local_repo.dart';
+import 'package:archonit_demo/data/repos/network_repo.dart';
+import 'package:archonit_demo/domain/models/currency.dart';
+import 'package:archonit_demo/domain/models/paginated_currencies.dart';
 
 class CurrencyUseCase {
   final NetworkRepo _networkRepo;

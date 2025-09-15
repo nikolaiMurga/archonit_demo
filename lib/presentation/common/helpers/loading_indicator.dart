@@ -1,6 +1,5 @@
+import 'package:archonit_demo/resources/app_colors.dart';
 import 'package:flutter/material.dart';
-
-import '../../../resources/app_colors.dart';
 
 class LoadingIndicator extends StatelessWidget {
   final double? height;

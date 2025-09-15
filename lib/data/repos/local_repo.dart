@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import '../mappers/currency_mapper.dart';
-import '../../domain/models/currency.dart';
-import '../db/db_client.dart';
+import 'package:archonit_demo/data/db/db_client.dart';
+import 'package:archonit_demo/data/mappers/currency_mapper.dart';
+import 'package:archonit_demo/domain/models/currency.dart';
 
 class LocalRepo {
   final DbClient _dbClient;
