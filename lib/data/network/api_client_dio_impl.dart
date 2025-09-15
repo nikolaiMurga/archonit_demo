@@ -1,11 +1,10 @@
+import 'package:archonit_demo/data/network/api_client.dart';
+import 'package:archonit_demo/data/network/endpoints.dart';
+import 'package:archonit_demo/data/network/params.dart';
+import 'package:archonit_demo/data/network/requests/currencies_request.dart';
+import 'package:archonit_demo/data/network/responses/currencies_response.dart';
+import 'package:archonit_demo/domain/mixins/dio_exception_mixin.dart';
 import 'package:dio/dio.dart';
-
-import '../../domain/mixins/dio_exception_mixin.dart';
-import 'api_client.dart';
-import 'endpoints.dart';
-import 'params.dart';
-import '../../../data/network/requests/currencies_request.dart';
-import 'responses/currencies_response.dart';
 
 class ApiClientDioImpl with DioExceptionMixin implements ApiClient {
   final Dio _dio;
@@ -15,7 +14,7 @@ class ApiClientDioImpl with DioExceptionMixin implements ApiClient {
 
   // GET
   Future<Response> _get({required String endpoint, required Map<String, dynamic> queryParams}) async {
-    return await dioExceptionHandle(apiCall: _dio.get(endpoint, queryParameters: queryParams));
+    return dioExceptionHandle(apiCall: _dio.get(endpoint, queryParameters: queryParams));
   }
 
   @override

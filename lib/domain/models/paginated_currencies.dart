@@ -1,4 +1,4 @@
-import 'currency.dart';
+import 'package:archonit_demo/domain/models/currency.dart';
 
 class PaginatedCurrencies {
   final List<Currency> currenciesList;

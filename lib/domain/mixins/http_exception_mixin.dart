@@ -1,9 +1,8 @@
 import 'dart:convert';
 
+import 'package:archonit_demo/app/logging_service.dart';
+import 'package:archonit_demo/domain/models/error_model.dart';
 import 'package:http/http.dart';
-
-import '../../app/logging_service.dart';
-import '../models/error_model.dart';
 
 mixin HttpExceptionMixin {
   Future<Response> handleResponseStatus({required Future<dynamic> apiCall}) async {

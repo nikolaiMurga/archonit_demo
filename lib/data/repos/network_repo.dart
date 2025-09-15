@@ -1,10 +1,9 @@
 import 'package:archonit_demo/data/mappers/currency_mapper.dart';
+import 'package:archonit_demo/data/network/api_client.dart';
+import 'package:archonit_demo/data/network/dto/currency_dto.dart';
+import 'package:archonit_demo/data/network/requests/currencies_request.dart';
+import 'package:archonit_demo/domain/models/currency.dart';
 import 'package:archonit_demo/domain/models/paginated_currencies.dart';
-
-import '../../../data/network/requests/currencies_request.dart';
-import '../../domain/models/currency.dart';
-import '../network/api_client.dart';
-import '../network/dto/currency_dto.dart';
 
 class NetworkRepo {
   final ApiClient _apiClient;

@@ -1,7 +1,6 @@
+import 'package:archonit_demo/app/logging_service.dart';
+import 'package:archonit_demo/data/db/db_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../app/logging_service.dart';
-import 'db_client.dart';
 
 class SharedDbClientImpl implements DbClient {
   final SharedPreferences _pref;

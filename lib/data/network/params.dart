@@ -1,4 +1,4 @@
-import '../../../data/network/requests/currencies_request.dart';
+import 'package:archonit_demo/data/network/requests/currencies_request.dart';
 
 class Params {
   static Params? _instance;

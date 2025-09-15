@@ -1,6 +1,5 @@
+import 'package:archonit_demo/resources/app_strings.dart';
 import 'package:flutter/material.dart';
-
-import '../../resources/app_strings.dart';
 
 mixin SnackBarMixin {
   void showSnackBar(BuildContext context, String message) {

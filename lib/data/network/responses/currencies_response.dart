@@ -1,4 +1,4 @@
-import '../dto/currency_dto.dart';
+import 'package:archonit_demo/data/network/dto/currency_dto.dart';
 
 class CurrenciesResponse {
   final List<CurrencyDto> dtoList;

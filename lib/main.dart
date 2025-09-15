@@ -1,24 +1,23 @@
+import 'package:archonit_demo/archonit_demo_app.dart';
+import 'package:archonit_demo/data/db/db_client.dart';
+import 'package:archonit_demo/data/db/hive_db_client_impl.dart';
+import 'package:archonit_demo/data/db/hive_persistence_service.dart';
+import 'package:archonit_demo/data/db/shared_db_client_impl.dart';
+import 'package:archonit_demo/data/mappers/currency_mapper.dart';
+import 'package:archonit_demo/data/network/api_client.dart';
+import 'package:archonit_demo/data/network/api_client_dio_impl.dart';
+import 'package:archonit_demo/data/network/endpoints.dart';
+import 'package:archonit_demo/data/network/params.dart';
+import 'package:archonit_demo/data/repos/local_repo.dart';
+import 'package:archonit_demo/data/repos/network_repo.dart';
+import 'package:archonit_demo/domain/use_cases/currency_use_case.dart';
+import 'package:archonit_demo/resources/app_constants.dart';
+import 'package:archonit_demo/resources/app_strings.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'archonit_demo_app.dart';
-import 'data/db/db_client.dart';
-import 'data/db/hive_db_client_impl.dart';
-import 'data/db/persistence_helper.dart';
-import 'data/db/shared_db_client_impl.dart';
-import 'data/network/api_client.dart';
-import 'data/network/api_client_dio_impl.dart';
-import 'data/network/endpoints.dart';
-import 'data/network/params.dart';
-import 'data/repos/local_repo.dart';
-import 'data/repos/network_repo.dart';
-import 'data/mappers/currency_mapper.dart';
-import 'domain/use_cases/currency_use_case.dart';
-import 'resources/app_constants.dart';
-import 'resources/app_strings.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
@@ -38,11 +37,11 @@ void main() async {
   // final ApiClient apiClient = ApiClientHttpImpl(params);
 
   // DB
-  final pref = await SharedPreferences.getInstance();
-  final DbClient dbClient = SharedDbClientImpl(pref);
+  // final pref = await SharedPreferences.getInstance();
+  // final DbClient dbClient = SharedDbClientImpl(pref);
 
-  // await PersistenceHelper.initHive();
-  // final DbClient dbClient = HiveDbClientImpl();
+  await HivePersistenceService.instance.init();
+  final DbClient dbClient = HiveDbClientImpl();
 
   // MAPPERS
   final CurrencyMapper currencyMapper = CurrencyMapper();

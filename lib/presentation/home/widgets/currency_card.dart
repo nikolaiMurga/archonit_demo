@@ -1,7 +1,6 @@
+import 'package:archonit_demo/domain/models/currency.dart';
+import 'package:archonit_demo/resources/app_test_styles.dart';
 import 'package:flutter/material.dart';
-
-import '../../../domain/models/currency.dart';
-import '../../../resources/app_test_styles.dart';
 
 class CurrencyCard extends StatelessWidget {
   final Currency currency;

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import '../mappers/currency_mapper.dart';
-import '../../domain/models/currency.dart';
-import '../db/db_client.dart';
+import 'package:archonit_demo/data/db/db_client.dart';
+import 'package:archonit_demo/data/mappers/currency_mapper.dart';
+import 'package:archonit_demo/domain/models/currency.dart';
 
 class LocalRepo {
   final DbClient _dbClient;
@@ -13,10 +13,10 @@ class LocalRepo {
   Future<bool> saveFavoriteCurrencies({required List<Currency> list}) async {
     final json = {'list': list.map((m) => _currencyMapper.toJson(m)).toList()};
     final jsonString = jsonEncode(json);
-    return await _dbClient.saveFavoriteCurrencies(jsonString);
+    return _dbClient.saveFavoriteCurrencies(jsonString);
   }
 
-  Future<List<Currency>> loadFavoriteCurrencies() async{
+  Future<List<Currency>> loadFavoriteCurrencies() async {
     final jsonString = await _dbClient.loadFavoriteCurrencies();
     if (jsonString != null) {
       final json = jsonDecode(jsonString);
@@ -27,6 +27,6 @@ class LocalRepo {
   }
 
   Future<bool> removeFavoriteCurrencies() async {
-    return await _dbClient.removeFavoriteCurrencies();
+    return _dbClient.removeFavoriteCurrencies();
   }
 }
