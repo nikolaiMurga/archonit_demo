@@ -1,5 +1,7 @@
 import 'package:archonit_demo/archonit_demo_app.dart';
 import 'package:archonit_demo/data/db/db_client.dart';
+import 'package:archonit_demo/data/db/hive_db_client_impl.dart';
+import 'package:archonit_demo/data/db/hive_persistence_service.dart';
 import 'package:archonit_demo/data/db/shared_db_client_impl.dart';
 import 'package:archonit_demo/data/mappers/currency_mapper.dart';
 import 'package:archonit_demo/data/network/api_client.dart';
@@ -35,11 +37,11 @@ void main() async {
   // final ApiClient apiClient = ApiClientHttpImpl(params);
 
   // DB
-  final pref = await SharedPreferences.getInstance();
-  final DbClient dbClient = SharedDbClientImpl(pref);
+  // final pref = await SharedPreferences.getInstance();
+  // final DbClient dbClient = SharedDbClientImpl(pref);
 
-  // await PersistenceHelper.initHive();
-  // final DbClient dbClient = HiveDbClientImpl();
+  await HivePersistenceService.instance.init();
+  final DbClient dbClient = HiveDbClientImpl();
 
   // MAPPERS
   final CurrencyMapper currencyMapper = CurrencyMapper();
