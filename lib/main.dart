@@ -6,6 +6,7 @@ import 'package:archonit_demo/data/db/shared_db_client_impl.dart';
 import 'package:archonit_demo/data/mappers/currency_mapper.dart';
 import 'package:archonit_demo/data/network/api_client.dart';
 import 'package:archonit_demo/data/network/api_client_dio_impl.dart';
+import 'package:archonit_demo/data/network/api_client_http_impl.dart';
 import 'package:archonit_demo/data/network/endpoints.dart';
 import 'package:archonit_demo/data/network/params.dart';
 import 'package:archonit_demo/data/repos/local_repo.dart';
@@ -33,8 +34,8 @@ void main() async {
   );
   final Dio dio = Dio(baseOptions);
 
-  final ApiClient apiClient = ApiClientDioImpl(dio, params);
-  // final ApiClient apiClient = ApiClientHttpImpl(params);
+  // final ApiClient apiClient = ApiClientDioImpl(dio);
+  final ApiClient apiClient = ApiClientHttpImpl(params);
 
   // DB
   // final pref = await SharedPreferences.getInstance();
@@ -47,7 +48,7 @@ void main() async {
   final CurrencyMapper currencyMapper = CurrencyMapper();
 
   // REPOS
-  final NetworkRepo networkRepo = NetworkRepo(apiClient, currencyMapper);
+  final NetworkRepo networkRepo = NetworkRepo(apiClient, currencyMapper, params);
   final LocalRepo localRepo = LocalRepo(dbClient, currencyMapper);
 
   // USE CASES
