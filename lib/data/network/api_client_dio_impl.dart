@@ -1,26 +1,69 @@
 import 'package:archonit_demo/data/network/api_client.dart';
-import 'package:archonit_demo/data/network/endpoints.dart';
-import 'package:archonit_demo/data/network/params.dart';
-import 'package:archonit_demo/data/network/requests/currencies_request.dart';
-import 'package:archonit_demo/data/network/responses/currencies_response.dart';
-import 'package:archonit_demo/domain/mixins/dio_exception_mixin.dart';
+import 'package:archonit_demo/domain/models/error_model.dart';
+import 'package:archonit_demo/resources/app_strings.dart';
 import 'package:dio/dio.dart';
 
-class ApiClientDioImpl with DioExceptionMixin implements ApiClient {
+class ApiClientDioImpl implements ApiClient {
   final Dio _dio;
-  final Params _params;
 
-  ApiClientDioImpl(this._dio, this._params);
+  ApiClientDioImpl(this._dio);
 
-  // GET
-  Future<Response> _get({required String endpoint, required Map<String, dynamic> queryParams}) async {
-    return dioExceptionHandle(apiCall: _dio.get(endpoint, queryParameters: queryParams));
+  ErrorModel _mapDioException(DioException e) {
+    if (e.type == DioExceptionType.badResponse) {
+      final statusCode = e.response?.statusCode;
+      final data = e.response?.data;
+
+      if (data is Map<String, dynamic>) {
+        try {
+          return ErrorModel.fromJson(data);
+        } catch (_) {
+          return ErrorModel(error: AppStrings.invalidResponse);
+        }
+      }
+
+      switch (statusCode) {
+        case 400:
+          return ErrorModel(error: AppStrings.badRequest);
+        case 401:
+          return ErrorModel(error: AppStrings.unauthorized);
+        case 403:
+          return ErrorModel(error: AppStrings.forbidden);
+        case 404:
+          return ErrorModel(error: AppStrings.notFound);
+        case 500:
+          return ErrorModel(error: AppStrings.serverError);
+        default:
+          return ErrorModel(error: AppStrings.unknownError);
+      }
+    }
+
+    switch (e.type) {
+      case DioExceptionType.connectionTimeout:
+        return ErrorModel(error: AppStrings.connectionTimeout);
+      case DioExceptionType.sendTimeout:
+        return ErrorModel(error: AppStrings.sendTimeout);
+      case DioExceptionType.receiveTimeout:
+        return ErrorModel(error: AppStrings.receiveTimeout);
+      case DioExceptionType.cancel:
+        return ErrorModel(error: AppStrings.requestCancelled);
+      default:
+        return ErrorModel(error: '${AppStrings.unknownError}: ${e.message}');
+    }
   }
 
+  Future<Response> _dioExceptionHandle({required Future<dynamic> apiCall}) async {
+    try {
+      final resp = await apiCall;
+      return resp;
+    } on DioException catch (e) {
+      throw _mapDioException(e);
+    }
+  }
+
+  // GET
   @override
-  Future<CurrenciesResponse> fetchCurrenciesResponse({required CurrenciesRequest request}) async {
-    final queryParams = _params.getCurrenciesRequestQueryParams(request: request);
-    final resp = await _get(endpoint: Endpoints.fetchAssets, queryParams: queryParams);
-    return CurrenciesResponse.fromJson(resp.data);
+  Future<dynamic> get({required String endpoint, required Map<String, dynamic> queryParams}) async {
+    final resp = await _dioExceptionHandle(apiCall: _dio.get(endpoint, queryParameters: queryParams));
+    return resp.data;
   }
 }
