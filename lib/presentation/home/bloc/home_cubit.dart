@@ -50,7 +50,7 @@ class HomeCubit extends Cubit<HomeState> {
         emit(HomeSucceed(currenciesList: _currenciesList, isLastPage: _isLastPage));
       }
     } on ErrorModel catch (e) {
-      emit(HomeError(error: e.error ?? AppStrings.noErrorMessage));
+      emit(HomeError(error: e.message ?? AppStrings.noErrorMessage));
     }
   }
 
