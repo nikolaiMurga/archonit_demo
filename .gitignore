@@ -22,6 +22,7 @@ pubspec.lock
 analysis_options.yaml
 .idea
 .dart_tool
+.env
 
 
 # The .vscode folder contains launch configuration and tasks you configure in
