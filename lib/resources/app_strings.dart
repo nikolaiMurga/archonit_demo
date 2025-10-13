@@ -24,4 +24,7 @@ class AppStrings {
   static const noSearchResults = 'No results';
   static const noErrorMessage = 'No error message';
   static const ok = 'ОК';
+
+  // favorites screen
+  static const favorites = 'Favorites';
 }
