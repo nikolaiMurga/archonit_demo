@@ -10,4 +10,7 @@ class Currency {
     required this.priceUsd,
     required this.color,
   });
+
+  @override
+  int get hashCode => symbol.hashCode;
 }

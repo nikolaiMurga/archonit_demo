@@ -16,6 +16,7 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit(this._currencyUseCase, this._favoritesUseCase) : super(HomeInitial());
 
   final List<Currency> _currenciesList = [];
+  final List<Currency> _favoritesList = [];
   bool _isLastPage = false;
   int _nextPage = 0;
 
@@ -55,8 +56,10 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  Future<bool> saveFavoriteCurrencies() async {
-    final isSaved = await _favoritesUseCase.saveFavoritesCurrencies(list: _currenciesList);
+  Future<bool> saveFavoriteCurrencies({required Currency model}) async {
+    final isInFavorites = _favoritesList.contains(model);
+    if(!isInFavorites) _favoritesList.add(model);
+    final isSaved = await _favoritesUseCase.saveFavoritesCurrencies(list: _favoritesList);
     return isSaved;
   }
 }
