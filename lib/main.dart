@@ -12,6 +12,7 @@ import 'package:archonit_demo/data/network/params.dart';
 import 'package:archonit_demo/data/repos/local_repo.dart';
 import 'package:archonit_demo/data/repos/network_repo.dart';
 import 'package:archonit_demo/domain/use_cases/currency_use_case.dart';
+import 'package:archonit_demo/domain/use_cases/favorites_use_case.dart';
 import 'package:archonit_demo/resources/app_constants.dart';
 import 'package:archonit_demo/resources/app_strings.dart';
 import 'package:dio/dio.dart';
@@ -52,12 +53,14 @@ void main() async {
   final LocalRepo localRepo = LocalRepo(dbClient, currencyMapper);
 
   // USE CASES
-  final CurrencyUseCase currencyUseCase = CurrencyUseCase(networkRepo, localRepo);
+  final CurrencyUseCase currencyUseCase = CurrencyUseCase(networkRepo);
+  final FavoritesUseCase favoritesUseCase = FavoritesUseCase(localRepo);
 
   runApp(
     MultiBlocProvider(
       providers: [
         RepositoryProvider<CurrencyUseCase>(create: (c) => currencyUseCase),
+        RepositoryProvider<FavoritesUseCase>(create: (c) => favoritesUseCase),
       ],
       child: const ArchonitDemoApp(),
     ),
