@@ -22,7 +22,7 @@ class FavoritesScreen extends StatelessWidget {
             if (state.isLoading) {
               return Center(child: CircularProgressIndicator());
             }
-            if (state.favoritesList.isNotEmpty) {
+            if (state.favoritesList.isEmpty) {
               return Center(child: EmptyStateWidget());
             }
             return ListView.builder(
