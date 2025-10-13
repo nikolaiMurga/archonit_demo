@@ -24,7 +24,7 @@ class SharedDbClientImpl implements DbClient {
   }
 
   @override
-  Future<String?> loadFavoriteCurrencies() async {
+  String? loadFavoriteCurrencies() {
     final jsonString = _pref.getString(_favoriteCurrenciesKey);
     LogService.addLog('loadFavoriteCurrenciesList succeed is $jsonString');
     return jsonString;

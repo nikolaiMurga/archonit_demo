@@ -10,7 +10,7 @@ class FavoritesUseCase {
     return _localRepo.saveFavoriteCurrencies(list: list);
   }
 
-  Future<List<Currency>> loadFavoriteCurrencies() async {
+  List<Currency> loadFavoriteCurrencies() {
     return _localRepo.loadFavoriteCurrencies();
   }
 

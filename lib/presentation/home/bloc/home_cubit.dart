@@ -2,6 +2,7 @@ import 'package:archonit_demo/data/network/requests/currencies_request.dart';
 import 'package:archonit_demo/domain/models/currency.dart';
 import 'package:archonit_demo/domain/models/error_model.dart';
 import 'package:archonit_demo/domain/use_cases/currency_use_case.dart';
+import 'package:archonit_demo/domain/use_cases/favorites_use_case.dart';
 import 'package:archonit_demo/resources/app_strings.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,8 +11,9 @@ part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   final CurrencyUseCase _currencyUseCase;
+  final FavoritesUseCase _favoritesUseCase;
 
-  HomeCubit(this._currencyUseCase) : super(HomeInitial());
+  HomeCubit(this._currencyUseCase, this._favoritesUseCase) : super(HomeInitial());
 
   final List<Currency> _currenciesList = [];
   bool _isLastPage = false;
@@ -46,7 +48,6 @@ class HomeCubit extends Cubit<HomeState> {
         _isLastPage = _nextPage == paginatedCurrencies.totalPages;
         if (!_isLastPage) _nextPage += 1;
         _currenciesList.addAll(paginatedCurrencies.currenciesList);
-        // await _saveFavoriteCurrencies();
         emit(HomeSucceed(currenciesList: _currenciesList, isLastPage: _isLastPage));
       }
     } on ErrorModel catch (e) {
@@ -54,10 +55,8 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-// Future<bool> _saveFavoriteCurrencies() async {
-//   final isSaved = await _currencyUseCase.saveFavoritesCurrencies(list: _currenciesList);
-//   final modelList = await _currencyUseCase.loadFavoriteCurrencies();
-//   final isRemoved = await _currencyUseCase.removeFavoriteCurrencies();
-//   return isSaved;
-// }
+  Future<bool> saveFavoriteCurrencies() async {
+    final isSaved = await _favoritesUseCase.saveFavoritesCurrencies(list: _currenciesList);
+    return isSaved;
+  }
 }
