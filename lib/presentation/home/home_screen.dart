@@ -52,6 +52,10 @@ class _HomeScreenState extends State<HomeScreen> with SnackBarMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(AppStrings.currencies),
+        actions: [IconButton(onPressed: ()=> context.router.push(const FavoritesRoute()), icon: Icon(Icons.favorite))],
+      ),
       body: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {
           if (state is HomeError) showSnackBar(context, state.error);
