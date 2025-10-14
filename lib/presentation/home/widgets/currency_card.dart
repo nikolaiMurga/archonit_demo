@@ -41,7 +41,6 @@ class _CurrencyCardState extends State<CurrencyCard> {
     if (result == 'favorite') {
       await context.read<FavoritesCubit>().updateFavoriteCurrencies(model: widget.currency);
       // temp solution to rebuild card on home screen
-
       if (widget.shouldSetState)
         setState(() => LogService.addLog('from setState'));
     }
