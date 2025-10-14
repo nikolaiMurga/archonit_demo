@@ -1,3 +1,4 @@
+import 'package:archonit_demo/app/logging_service.dart';
 import 'package:archonit_demo/domain/models/currency.dart';
 import 'package:archonit_demo/presentation/favorites/bloc/favorites_cubit.dart';
 import 'package:archonit_demo/resources/app_test_styles.dart';
@@ -6,14 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CurrencyCard extends StatefulWidget {
   final Currency currency;
+  final bool shouldSetState;
 
-  const CurrencyCard({super.key, required this.currency});
+  const CurrencyCard({super.key, required this.currency, this.shouldSetState = false});
 
   @override
   State<CurrencyCard> createState() => _CurrencyCardState();
 }
-
-
 
 class _CurrencyCardState extends State<CurrencyCard> {
   void _showContextMenu(BuildContext context, Offset position, Currency model) async {
@@ -41,7 +41,9 @@ class _CurrencyCardState extends State<CurrencyCard> {
     if (result == 'favorite') {
       await context.read<FavoritesCubit>().updateFavoriteCurrencies(model: widget.currency);
       // temp solution to rebuild card on home screen
-      setState(() {});
+
+      if (widget.shouldSetState)
+        setState(() => LogService.addLog('from setState'));
     }
   }
 
