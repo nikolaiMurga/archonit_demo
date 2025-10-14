@@ -1,4 +1,5 @@
 import 'package:archonit_demo/domain/use_cases/currency_use_case.dart';
+import 'package:archonit_demo/domain/use_cases/favorites_use_case.dart';
 import 'package:archonit_demo/presentation/home/bloc/home_cubit.dart';
 import 'package:archonit_demo/presentation/home/home_screen.dart';
 import 'package:auto_route/annotations.dart';
@@ -12,7 +13,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (c) => HomeCubit(RepositoryProvider.of<CurrencyUseCase>(c))..getCurrencies(),
+      create: (c) => HomeCubit(RepositoryProvider.of<CurrencyUseCase>(c), RepositoryProvider.of<FavoritesUseCase>(c))..getCurrencies(),
       child: const HomeScreen(),
     );
   }

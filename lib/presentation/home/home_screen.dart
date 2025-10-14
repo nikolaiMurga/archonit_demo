@@ -1,8 +1,11 @@
+import 'package:archonit_demo/app/auto_router.dart';
 import 'package:archonit_demo/domain/mixins/snack_bar_mixin.dart';
 import 'package:archonit_demo/presentation/common/helpers/loading_indicator.dart';
 import 'package:archonit_demo/presentation/home/bloc/home_cubit.dart';
 import 'package:archonit_demo/presentation/home/widgets/currency_card.dart';
 import 'package:archonit_demo/presentation/home/widgets/empty_state_widget.dart';
+import 'package:archonit_demo/resources/app_strings.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -52,13 +55,17 @@ class _HomeScreenState extends State<HomeScreen> with SnackBarMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(AppStrings.currencies),
+        actions: [IconButton(onPressed: ()=> context.router.push(const FavoritesRoute()), icon: Icon(Icons.favorite))],
+      ),
       body: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {
           if (state is HomeError) showSnackBar(context, state.error);
+          if (state is HomeInfoState) showSnackBar(context, state.message);
         },
-        buildWhen: (context, state) {
-          return state is HomeSucceed || state is HomeLoading;
-        },
+        listenWhen: (context, state) => state is HomeError || state is HomeInfoState,
+        buildWhen: (context, state) => state is HomeSucceed || state is HomeLoading,
         builder: (context, state) {
           if (state is HomeLoading) {
             return const LoadingIndicator(width: double.maxFinite);

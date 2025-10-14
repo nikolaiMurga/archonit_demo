@@ -13,8 +13,8 @@ class HiveDbClientImpl implements DbClient {
   }
 
   @override
-  Future<String?> loadFavoriteCurrencies() async {
-    final jsonString = await HivePersistenceService.instance.favoriteCurrenciesBox.get(_favoritesCurrenciesKey);
+  String? loadFavoriteCurrencies() {
+    final jsonString = HivePersistenceService.instance.favoriteCurrenciesBox.get(_favoritesCurrenciesKey);
     return jsonString;
   }
 

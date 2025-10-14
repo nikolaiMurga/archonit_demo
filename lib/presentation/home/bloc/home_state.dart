@@ -42,3 +42,13 @@ final class HomeScroll extends HomeState {
   @override
   List<Object> get props => [];
 }
+
+final class HomeInfoState extends HomeState {
+  final String message;
+
+
+  const HomeInfoState({required this.message});
+
+  @override
+  List<Object?> get props => [message];
+}
