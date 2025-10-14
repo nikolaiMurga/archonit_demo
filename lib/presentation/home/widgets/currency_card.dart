@@ -1,4 +1,5 @@
 import 'package:archonit_demo/domain/models/currency.dart';
+import 'package:archonit_demo/presentation/favorites/bloc/favorites_cubit.dart';
 import 'package:archonit_demo/presentation/home/bloc/home_cubit.dart';
 import 'package:archonit_demo/resources/app_test_styles.dart';
 import 'package:flutter/material.dart';
@@ -17,13 +18,7 @@ class CurrencyCard extends StatelessWidget {
       items: [
         PopupMenuItem(
           value: 'favorite',
-          child: Row(
-            children: [
-              Icon(Icons.favorite_border),
-              SizedBox(width: 8),
-              Text('add to favorites'),
-            ],
-          ),
+          child: Row(children: [Icon(Icons.favorite_border), SizedBox(width: 8), Text('add to favorites')]),
         ),
       ],
       elevation: 8,
@@ -37,6 +32,7 @@ class CurrencyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _isFavorite = context.read<FavoritesCubit>().state.favoritesList.contains(currency);
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onLongPressStart: (details) => _showContextMenu(context, details.globalPosition, currency),
@@ -55,6 +51,7 @@ class CurrencyCard extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16.0),
                 child: Text(currency.symbol, style: AppTextStyles.text16w600),
               ),
+              if (_isFavorite) Padding(padding: const EdgeInsets.all(8.0), child: Icon(Icons.favorite, size: 12)),
               const Expanded(child: SizedBox()),
               Text('\$${currency.priceUsd.toStringAsFixed(2)}', style: AppTextStyles.text16w600),
             ],

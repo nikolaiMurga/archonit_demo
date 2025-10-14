@@ -1,4 +1,3 @@
-import 'package:archonit_demo/domain/use_cases/favorites_use_case.dart';
 import 'package:archonit_demo/presentation/favorites/bloc/favorites_cubit.dart';
 import 'package:archonit_demo/presentation/home/widgets/currency_card.dart';
 import 'package:archonit_demo/presentation/home/widgets/empty_state_widget.dart';
@@ -13,8 +12,8 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (c) => FavoritesCubit(RepositoryProvider.of<FavoritesUseCase>(context))..loadFavoritesCurrenciesList(),
+    return BlocProvider.value(
+      value: BlocProvider.of<FavoritesCubit>(context),
       child: Scaffold(
         appBar: AppBar(title: Text(AppStrings.favorites)),
         body: BlocBuilder<FavoritesCubit, FavoritesState>(

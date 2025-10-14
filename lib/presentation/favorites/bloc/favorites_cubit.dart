@@ -9,7 +9,9 @@ part 'favorites_state.dart';
 class FavoritesCubit extends Cubit<FavoritesState> {
   final FavoritesUseCase _favoritesUseCase;
 
-  FavoritesCubit(this._favoritesUseCase) : super(FavoritesState(favoritesList: []));
+  FavoritesCubit(this._favoritesUseCase) : super(FavoritesState(favoritesList: [])) {
+    loadFavoritesCurrenciesList();
+  }
 
   void loadFavoritesCurrenciesList() {
     emit(FavoritesState(isLoading: true, favoritesList: state.favoritesList));
