@@ -55,25 +55,5 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  Future<void> saveFavoriteCurrencies({required Currency model}) async {
-    // load cached favorites list
-    final favoritesList = _favoritesUseCase.loadFavoriteCurrencies();
-    // check if model is in favorites
-    final isModelInFavorites = favoritesList.contains(model);
-    if (isModelInFavorites) {
-      // if model is in favorites just inform user
-      emit(HomeInfoState(message: '${model.symbol} is in favorites already'));
-    } else {
-      // if no, save model to favorites
-      favoritesList.add(model);
-      try {
-        // cached favorites list
-        await _favoritesUseCase.saveFavoritesCurrencies(list: favoritesList);
-        // inform user that caching successful
-        emit(HomeInfoState(message: '${model.symbol} successfully added to  favorites '));
-      } catch (e) {
-        emit(HomeError(error: e.toString()));
-      }
-    }
-  }
+  void updateFavorites() => emit(HomeInfoState(message: 'message'));
 }

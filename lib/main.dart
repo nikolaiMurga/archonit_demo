@@ -13,6 +13,8 @@ import 'package:archonit_demo/data/repos/local_repo.dart';
 import 'package:archonit_demo/data/repos/network_repo.dart';
 import 'package:archonit_demo/domain/use_cases/currency_use_case.dart';
 import 'package:archonit_demo/domain/use_cases/favorites_use_case.dart';
+import 'package:archonit_demo/presentation/favorites/bloc/favorites_cubit.dart';
+import 'package:archonit_demo/presentation/home/bloc/home_cubit.dart';
 import 'package:archonit_demo/resources/app_constants.dart';
 import 'package:archonit_demo/resources/app_strings.dart';
 import 'package:dio/dio.dart';
@@ -56,11 +58,15 @@ void main() async {
   final CurrencyUseCase currencyUseCase = CurrencyUseCase(networkRepo);
   final FavoritesUseCase favoritesUseCase = FavoritesUseCase(localRepo);
 
+  // BLOCS
+  final HomeCubit homeCubit = HomeCubit(currencyUseCase, favoritesUseCase);
+  final FavoritesCubit favoritesCubit = FavoritesCubit(favoritesUseCase);
+
   runApp(
     MultiBlocProvider(
       providers: [
-        RepositoryProvider<CurrencyUseCase>(create: (c) => currencyUseCase),
-        RepositoryProvider<FavoritesUseCase>(create: (c) => favoritesUseCase),
+        BlocProvider(create: (c) => homeCubit),
+        BlocProvider(create: (c) => favoritesCubit),
       ],
       child: const ArchonitDemoApp(),
     ),
