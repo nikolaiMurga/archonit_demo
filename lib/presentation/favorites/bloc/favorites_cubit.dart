@@ -32,10 +32,11 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       emit(FavoritesState(favoritesList: updatedList));
     } else {
       // if no, save model to favorites
-      state.favoritesList.add(model);
+      final updatedList = [...state.favoritesList, model];
       try {
         // cached favorites list
         await _favoritesUseCase.saveFavoritesCurrencies(list: state.favoritesList);
+        emit(FavoritesState(favoritesList: updatedList));
       } catch (e) {
         emit(
           FavoritesState(

@@ -5,19 +5,13 @@ import 'package:archonit_demo/resources/app_test_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CurrencyCard extends StatefulWidget {
+class CurrencyCard extends StatelessWidget {
   final Currency currency;
-  final bool shouldSetState;
 
-  const CurrencyCard({super.key, required this.currency, this.shouldSetState = false});
+  const CurrencyCard({super.key, required this.currency});
 
-  @override
-  State<CurrencyCard> createState() => _CurrencyCardState();
-}
-
-class _CurrencyCardState extends State<CurrencyCard> {
   void _showContextMenu(BuildContext context, Offset position, Currency model) async {
-    final _isFavorite = context.read<FavoritesCubit>().state.favoritesList.contains(widget.currency);
+    final _isFavorite = context.read<FavoritesCubit>().state.favoritesList.contains(currency);
     final RenderBox overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
     final result = await showMenu(
       context: context,
@@ -39,19 +33,15 @@ class _CurrencyCardState extends State<CurrencyCard> {
     );
 
     if (result == 'favorite') {
-      await context.read<FavoritesCubit>().updateFavoriteCurrencies(model: widget.currency);
-      // temp solution to rebuild card on home screen
-      if (widget.shouldSetState)
-        setState(() => LogService.addLog('from setState'));
+      await context.read<FavoritesCubit>().updateFavoriteCurrencies(model: currency);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final _isFavorite = context.watch<FavoritesCubit>().isFavorite(widget.currency);
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onLongPressStart: (details) => _showContextMenu(context, details.globalPosition, widget.currency),
+      onLongPressStart: (details) => _showContextMenu(context, details.globalPosition, currency),
       child: SizedBox(
         height: 84,
         child: Padding(
@@ -61,15 +51,22 @@ class _CurrencyCardState extends State<CurrencyCard> {
               Container(
                 height: 56,
                 width: 56,
-                decoration: BoxDecoration(color: widget.currency.color, borderRadius: BorderRadius.circular(18)),
+                decoration: BoxDecoration(color: currency.color, borderRadius: BorderRadius.circular(18)),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0),
-                child: Text(widget.currency.symbol, style: AppTextStyles.text16w600),
+                child: Text(currency.symbol, style: AppTextStyles.text16w600),
               ),
-              if (_isFavorite) Padding(padding: const EdgeInsets.all(8.0), child: Icon(Icons.favorite, size: 12)),
+              Builder(
+                builder: (context) {
+                  final _isFavorite = context.watch<FavoritesCubit>().isFavorite(currency);
+                  return _isFavorite
+                      ? Padding(padding: const EdgeInsets.all(8.0), child: Icon(Icons.favorite, size: 12))
+                      : SizedBox.shrink();
+                },
+              ),
               const Expanded(child: SizedBox()),
-              Text('\$${widget.currency.priceUsd.toStringAsFixed(2)}', style: AppTextStyles.text16w600),
+              Text('\$${currency.priceUsd.toStringAsFixed(2)}', style: AppTextStyles.text16w600),
             ],
           ),
         ),
