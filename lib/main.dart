@@ -59,14 +59,14 @@ void main() async {
   final FavoritesUseCase favoritesUseCase = FavoritesUseCase(localRepo);
 
   // BLOCS
-  final HomeCubit homeCubit = HomeCubit(currencyUseCase, favoritesUseCase);
+  final HomeCubit homeCubit = HomeCubit(currencyUseCase);
   final FavoritesCubit favoritesCubit = FavoritesCubit(favoritesUseCase);
 
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (c) => homeCubit),
-        BlocProvider(create: (c) => favoritesCubit),
+        RepositoryProvider<CurrencyUseCase>(create: (c)=> currencyUseCase),
+        BlocProvider<FavoritesCubit>(create: (c) => favoritesCubit),
       ],
       child: const ArchonitDemoApp(),
     ),
