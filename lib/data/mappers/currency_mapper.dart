@@ -21,7 +21,7 @@ class CurrencyMapper with RandomColorMixin {
       'id': model.id,
       'symbol': model.symbol,
       'priceUsd': model.priceUsd,
-      'color': '#${model.color.value.toRadixString(16).padLeft(8, '0')}',
+      'color': '#${model.color.toARGB32().toRadixString(16).padLeft(8, '0')}',
     };
   }
 }

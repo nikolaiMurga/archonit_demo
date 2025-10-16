@@ -1,11 +1,8 @@
 import 'package:archonit_demo/data/db/db_client.dart';
-import 'package:archonit_demo/data/db/hive_db_client_impl.dart';
-import 'package:archonit_demo/data/db/hive_persistence_service.dart';
 import 'package:archonit_demo/data/db/shared_db_client_impl.dart';
 import 'package:archonit_demo/data/mappers/currency_mapper.dart';
 import 'package:archonit_demo/data/network/api_client.dart';
 import 'package:archonit_demo/data/network/api_client_dio_impl.dart';
-import 'package:archonit_demo/data/network/api_client_http_impl.dart';
 import 'package:archonit_demo/data/network/params.dart';
 import 'package:archonit_demo/data/repos/local_repo.dart';
 import 'package:archonit_demo/data/repos/network_repo.dart';
