@@ -6,6 +6,8 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../app/locator.dart';
+
 @RoutePage()
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});
@@ -13,7 +15,8 @@ class FavoritesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: BlocProvider.of<FavoritesCubit>(context),
+      // value: BlocProvider.of<FavoritesCubit>(context),
+      value: getIt<FavoritesCubit>(),
       child: Scaffold(
         appBar: AppBar(title: Text(AppStrings.favorites)),
         body: BlocBuilder<FavoritesCubit, FavoritesState>(

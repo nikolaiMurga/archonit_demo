@@ -1,12 +1,23 @@
+import 'package:archonit_demo/app/locator.dart';
 import 'package:archonit_demo/data/network/api_client.dart';
+import 'package:archonit_demo/data/network/endpoints.dart';
+import 'package:archonit_demo/data/network/params.dart';
 import 'package:archonit_demo/domain/models/error_model.dart';
+import 'package:archonit_demo/resources/app_constants.dart';
 import 'package:archonit_demo/resources/app_strings.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiClientDioImpl implements ApiClient {
-  final Dio _dio;
+  ApiClientDioImpl();
 
-  ApiClientDioImpl(this._dio);
+  final Dio _dio = Dio(BaseOptions(
+    baseUrl: Endpoints.baseUrl,
+    headers: getIt<Params>().getHeaders(token: dotenv.env[AppStrings.apiToken]),
+    connectTimeout: AppConstants.connectTimeout,
+    receiveTimeout: AppConstants.receiveTimeout,
+    sendTimeout: AppConstants.sendTimeout,
+  ));
 
   ErrorModel _mapDioException(DioException e) {
     ErrorModel badResponseHandle() {
