@@ -12,7 +12,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   HomeCubit(this._currencyUseCase) : super(HomeState());
 
-  void clear() {
+  void refreshFetch() {
     emit(HomeState(isLoading: true));
     fetchPaginatedCurrencies();
   }
