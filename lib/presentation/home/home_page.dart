@@ -13,10 +13,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(providers: [
-      BlocProvider.value(value: BlocProvider.of<HomeCubit>(context)..getCurrencies()),
-      BlocProvider.value(value: BlocProvider.of<FavoritesCubit>(context)),
-    ],
+    return BlocProvider<HomeCubit>(
+      create: (c) => HomeCubit(RepositoryProvider.of<CurrencyUseCase>(context))..getCurrencies(),
       child: const HomeScreen(),
     );
   }

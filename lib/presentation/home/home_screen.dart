@@ -1,9 +1,9 @@
 import 'package:archonit_demo/app/auto_router.dart';
 import 'package:archonit_demo/domain/mixins/snack_bar_mixin.dart';
-import 'package:archonit_demo/presentation/common/helpers/loading_indicator.dart';
+import 'package:archonit_demo/presentation/common/widgets/currency_card.dart';
+import 'package:archonit_demo/presentation/common/widgets/loading_indicator.dart';
 import 'package:archonit_demo/presentation/home/bloc/home_cubit.dart';
-import 'package:archonit_demo/presentation/home/widgets/currency_card.dart';
-import 'package:archonit_demo/presentation/home/widgets/empty_state_widget.dart';
+import 'package:archonit_demo/presentation/common/widgets/empty_state_widget.dart';
 import 'package:archonit_demo/resources/app_strings.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';

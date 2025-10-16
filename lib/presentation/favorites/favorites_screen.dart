@@ -1,6 +1,6 @@
+import 'package:archonit_demo/presentation/common/widgets/currency_card.dart';
 import 'package:archonit_demo/presentation/favorites/bloc/favorites_cubit.dart';
-import 'package:archonit_demo/presentation/home/widgets/currency_card.dart';
-import 'package:archonit_demo/presentation/home/widgets/empty_state_widget.dart';
+import 'package:archonit_demo/presentation/common/widgets/empty_state_widget.dart';
 import 'package:archonit_demo/resources/app_strings.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';

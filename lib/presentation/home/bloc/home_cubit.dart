@@ -11,9 +11,8 @@ part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   final CurrencyUseCase _currencyUseCase;
-  final FavoritesUseCase _favoritesUseCase;
 
-  HomeCubit(this._currencyUseCase, this._favoritesUseCase) : super(HomeInitial());
+  HomeCubit(this._currencyUseCase) : super(HomeInitial());
 
   final List<Currency> _currenciesList = [];
   bool _isLastPage = false;
@@ -54,6 +53,4 @@ class HomeCubit extends Cubit<HomeState> {
       emit(HomeError(error: e.message ?? AppStrings.noErrorMessage));
     }
   }
-
-  void updateFavorites() => emit(HomeInfoState(message: 'message'));
 }

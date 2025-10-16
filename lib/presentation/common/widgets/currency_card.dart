@@ -1,4 +1,3 @@
-import 'package:archonit_demo/app/logging_service.dart';
 import 'package:archonit_demo/domain/models/currency.dart';
 import 'package:archonit_demo/presentation/favorites/bloc/favorites_cubit.dart';
 import 'package:archonit_demo/resources/app_test_styles.dart';
