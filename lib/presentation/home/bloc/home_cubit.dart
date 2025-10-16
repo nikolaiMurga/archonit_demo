@@ -2,7 +2,6 @@ import 'package:archonit_demo/data/network/requests/currencies_request.dart';
 import 'package:archonit_demo/domain/models/currency.dart';
 import 'package:archonit_demo/domain/models/error_model.dart';
 import 'package:archonit_demo/domain/use_cases/currency_use_case.dart';
-import 'package:archonit_demo/domain/use_cases/favorites_use_case.dart';
 import 'package:archonit_demo/resources/app_strings.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

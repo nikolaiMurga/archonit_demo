@@ -1,14 +1,14 @@
 import 'package:archonit_demo/data/network/requests/currencies_request.dart';
 
 class Params {
-  static Params? _instance;
-
-  Params._privateConstructor();
-
-  factory Params() {
-    _instance ??= Params._privateConstructor();
-    return _instance!;
-  }
+  // static Params? _instance;
+  //
+  // Params._privateConstructor();
+  //
+  // factory Params() {
+  //   _instance ??= Params._privateConstructor();
+  //   return _instance!;
+  // }
 
   // HEADERS
   Map<String, String> getHeaders({String? token, bool? data}) {
