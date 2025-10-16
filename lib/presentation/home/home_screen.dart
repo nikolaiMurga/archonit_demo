@@ -34,16 +34,15 @@ class _HomeScreenState extends State<HomeScreen> with SnackBarMixin {
 
   // infinity scroll method
   void _fetchPage() {
-    final endOfPage = _controller.position.pixels == _controller.position.maxScrollExtent;
-    if (endOfPage) {
-      _homeCubit.getCurrencies(isScroll: true);
+    if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+      _homeCubit.fetchPaginatedCurrencies();
     }
   }
 
   // refresh method
   void _reloadList() {
     _resetController();
-    _homeCubit.getCurrencies(isReload: true);
+    _homeCubit.clear();
   }
 
   @override
@@ -57,41 +56,40 @@ class _HomeScreenState extends State<HomeScreen> with SnackBarMixin {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppStrings.currencies),
-        actions: [IconButton(onPressed: ()=> context.router.push(const FavoritesRoute()), icon: Icon(Icons.favorite))],
+        actions: [IconButton(onPressed: () => context.router.push(const FavoritesRoute()), icon: Icon(Icons.favorite))],
       ),
       body: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {
-          if (state is HomeError) showSnackBar(context, state.error);
-          if (state is HomeInfoState) showSnackBar(context, state.message);
+          if (state.hasError) {
+            showSnackBar(context, state.errorMessage ?? AppStrings.noErrorMessage);
+          }
         },
-        listenWhen: (context, state) => state is HomeError || state is HomeInfoState,
-        buildWhen: (context, state) => state is HomeSucceed || state is HomeLoading,
         builder: (context, state) {
-          if (state is HomeLoading) {
+          if (state.isLoading) {
             return const LoadingIndicator(width: double.maxFinite);
           }
-          if (state is HomeSucceed) {
-            return RefreshIndicator(
-              onRefresh: () async => _reloadList(),
-              child: ListView.separated(
-                physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-                controller: _controller,
-                separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 8),
-                itemCount: state.currenciesList.length + 1,
-                itemBuilder: (context, index) {
-                  if (index < state.currenciesList.length) {
-                    return CurrencyCard(currency: state.currenciesList[index]);
-                  } else if (state.isLastPage) {
-                    return const SizedBox.shrink();
-                  } else {
-                    return const LoadingIndicator(height: 89, width: double.maxFinite);
-                  }
-                },
-              ),
-            );
-          }
-          if (state is HomeEmpty) return const EmptyStateWidget();
-          return const SizedBox.shrink();
+          if (state.currenciesList.isEmpty && !state.isLoading) return const EmptyStateWidget();
+          return RefreshIndicator(
+            onRefresh: () async => _reloadList(),
+            child: ListView.separated(
+              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+              controller: _controller,
+              separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 8),
+              itemCount: state.currenciesList.length + 1,
+              itemBuilder: (context, index) {
+                if (index < state.currenciesList.length) {
+                  return CurrencyCard(currency: state.currenciesList[index]);
+                } else if (state.isLastPage) {
+                  return const SizedBox.shrink();
+                } else {
+                  return const LoadingIndicator(height: 89, width: double.maxFinite);
+                }
+              },
+            ),
+          );
+          // }
+
+          // return const SizedBox.shrink();
         },
       ),
     );

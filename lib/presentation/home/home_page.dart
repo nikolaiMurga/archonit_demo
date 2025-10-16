@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<HomeCubit>(
-      create: (c) => getIt<HomeCubit>()..getCurrencies(),
+      create: (c) => getIt<HomeCubit>()..fetchPaginatedCurrencies(),
       child: const HomeScreen(),
     );
   }
