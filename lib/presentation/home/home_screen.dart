@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> with SnackBarMixin {
   // refresh method
   void _reloadList() {
     _resetController();
-    _homeCubit.refreshFetch();
+    _homeCubit.initialFetch();
   }
 
   @override

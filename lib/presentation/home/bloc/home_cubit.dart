@@ -12,18 +12,16 @@ class HomeCubit extends Cubit<HomeState> {
 
   HomeCubit(this._currencyUseCase) : super(HomeState());
 
-  void refreshFetch() {
+  void initialFetch() {
     emit(HomeState(isLoading: true));
     fetchPaginatedCurrencies();
   }
 
   Future<void> fetchPaginatedCurrencies() async {
     if (state.isLastPage) return;
-    if (state.nextPage == 1) emit(HomeState(isLoading: true));
     try {
       final request = CurrenciesRequest(page: state.nextPage);
       final paginatedCurrencies = await _currencyUseCase.fetchCurrencies(request: request);
-
       if (paginatedCurrencies.currenciesList.isEmpty) {
         emit(HomeState());
       } else {
