@@ -9,8 +9,7 @@ class CurrencyCard extends StatelessWidget {
 
   const CurrencyCard({super.key, required this.currency});
 
-  void _showContextMenu(BuildContext context, Offset position, Currency model) async {
-    final _isFavorite = context.read<FavoritesCubit>().state.favoritesList.contains(currency);
+  void _showContextMenu(BuildContext context, Offset position, bool isFavorite, VoidCallback updateFavorite) async {
     final RenderBox overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
     final result = await showMenu(
       context: context,
@@ -20,9 +19,9 @@ class CurrencyCard extends StatelessWidget {
           value: 'favorite',
           child: Row(
             children: [
-              Icon(_isFavorite ? Icons.favorite_border : Icons.favorite),
-              SizedBox(width: 8),
-              Text(_isFavorite ? 'remove from favorites' : 'add to favorites'),
+              Icon(isFavorite ? Icons.favorite_border : Icons.favorite),
+              const SizedBox(width: 8),
+              Text(isFavorite ? 'remove from favorites' : 'add to favorites'),
             ],
           ),
         ),
@@ -30,17 +29,24 @@ class CurrencyCard extends StatelessWidget {
       elevation: 8,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     );
-
-    if (result == 'favorite') {
-      await context.read<FavoritesCubit>().updateFavoriteCurrencies(model: currency);
-    }
+    if (result == 'favorite') updateFavorite();
   }
 
   @override
   Widget build(BuildContext context) {
+    final readCubit = context.read<FavoritesCubit>();
+    final watchCubit = context.watch<FavoritesCubit>();
+
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onLongPressStart: (details) => _showContextMenu(context, details.globalPosition, currency),
+      onLongPressStart: (details) {
+        _showContextMenu(
+          context,
+          details.globalPosition,
+          readCubit.state.favoritesList.contains(currency),
+          () async => await readCubit.updateFavoriteCurrencies(currency: currency),
+        );
+      },
       child: SizedBox(
         height: 84,
         child: Padding(
@@ -58,10 +64,10 @@ class CurrencyCard extends StatelessWidget {
               ),
               Builder(
                 builder: (context) {
-                  final _isFavorite = context.watch<FavoritesCubit>().isFavorite(currency);
-                  return _isFavorite
-                      ? Padding(padding: const EdgeInsets.all(8.0), child: Icon(Icons.favorite, size: 12))
-                      : SizedBox.shrink();
+                  final isFavorite = watchCubit.isFavorite(currency);
+                  return isFavorite
+                      ? const Padding(padding: EdgeInsets.all(8.0), child: Icon(Icons.favorite, size: 12))
+                      : const SizedBox.shrink();
                 },
               ),
               const Expanded(child: SizedBox()),

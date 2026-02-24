@@ -11,8 +11,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<HomeCubit>(
-      create: (c) => getIt<HomeCubit>()..initialFetch(),
+    return BlocProvider.value(
+      value: BlocProvider.of<HomeCubit>(context)..initialFetch(),
       child: const HomeScreen(),
     );
   }

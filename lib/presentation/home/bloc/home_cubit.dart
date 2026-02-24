@@ -10,10 +10,10 @@ part 'home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   final CurrencyUseCase _currencyUseCase;
 
-  HomeCubit(this._currencyUseCase) : super(HomeState());
+  HomeCubit(this._currencyUseCase) : super(const HomeState());
 
   void initialFetch() {
-    emit(HomeState(isLoading: true));
+    emit(const HomeState(isLoading: true));
     fetchPaginatedCurrencies();
   }
 
@@ -23,7 +23,7 @@ class HomeCubit extends Cubit<HomeState> {
       final request = CurrenciesRequest(page: state.nextPage);
       final paginatedCurrencies = await _currencyUseCase.fetchCurrencies(request: request);
       if (paginatedCurrencies.currenciesList.isEmpty) {
-        emit(HomeState());
+        emit(const HomeState());
       } else {
         final updatedList = [...state.currenciesList, ...paginatedCurrencies.currenciesList];
         emit(HomeState(
