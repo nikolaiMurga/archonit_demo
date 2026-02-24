@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import 'presentation/home/bloc/home_cubit.dart';
+
 void main() async {
   await dotenv.load(fileName: ".env");
   await Locator().setup();
@@ -14,6 +16,7 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider<HomeCubit>(create: (c) => getIt<HomeCubit>()),
         BlocProvider<FavoritesCubit>(create: (c) => getIt<FavoritesCubit>()),
       ],
       child: const ArchonitDemoApp(),

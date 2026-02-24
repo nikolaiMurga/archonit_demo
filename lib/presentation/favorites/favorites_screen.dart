@@ -15,17 +15,16 @@ class FavoritesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      // value: BlocProvider.of<FavoritesCubit>(context),
-      value: getIt<FavoritesCubit>(),
+      value: BlocProvider.of<FavoritesCubit>(context),
       child: Scaffold(
-        appBar: AppBar(title: Text(AppStrings.favorites)),
+        appBar: AppBar(title: const Text(AppStrings.favorites)),
         body: BlocBuilder<FavoritesCubit, FavoritesState>(
           builder: (c, state) {
             if (state.isLoading) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
             if (state.favoritesList.isEmpty) {
-              return Center(child: EmptyStateWidget());
+              return const Center(child: EmptyStateWidget());
             }
             return ListView.builder(
               itemCount: state.favoritesList.length,

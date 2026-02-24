@@ -40,7 +40,7 @@ class Locator {
     getIt.registerFactory<FavoritesUseCase>(() => FavoritesUseCase(getIt<LocalRepo>()));
 
     // blocs
-    getIt.registerFactory<HomeCubit>(() => HomeCubit(getIt<CurrencyUseCase>()));
+    getIt.registerSingleton<HomeCubit>(HomeCubit(getIt<CurrencyUseCase>()));
     getIt.registerSingleton<FavoritesCubit>(FavoritesCubit(getIt<FavoritesUseCase>()));
   }
 }
