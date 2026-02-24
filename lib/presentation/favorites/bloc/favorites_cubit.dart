@@ -9,7 +9,7 @@ part 'favorites_state.dart';
 class FavoritesCubit extends Cubit<FavoritesState> {
   final FavoritesUseCase _favoritesUseCase;
 
-  FavoritesCubit(this._favoritesUseCase) : super(FavoritesState(favoritesList: [])) {
+  FavoritesCubit(this._favoritesUseCase) : super(const FavoritesState(favoritesList: [])) {
     loadFavoritesCurrenciesList();
   }
 
@@ -19,19 +19,19 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     emit(FavoritesState(favoritesList: loadedList));
   }
 
-  Future<void> updateFavoriteCurrencies({required Currency model}) async {
+  Future<void> updateFavoriteCurrencies({required Currency currency}) async {
     // check if model is in favorites
-    final isModelInFavorites = state.favoritesList.contains(model);
+    final isModelInFavorites = state.favoritesList.contains(currency);
     if (isModelInFavorites) {
       // if model is in favorites remove model
-      final updatedList = state.favoritesList.where((curr) => curr != model).toList();
+      final updatedList = state.favoritesList.where((curr) => curr != currency).toList();
       // cache updated list without model
       await _favoritesUseCase.saveFavoritesCurrencies(list: updatedList);
       // update state
       emit(FavoritesState(favoritesList: updatedList));
     } else {
       // if no, save model to favorites
-      final updatedList = [...state.favoritesList, model];
+      final updatedList = [...state.favoritesList, currency];
       try {
         // cached favorites list
         await _favoritesUseCase.saveFavoritesCurrencies(list: state.favoritesList);
