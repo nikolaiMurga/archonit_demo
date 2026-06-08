@@ -1,7 +1,7 @@
 part of 'home_cubit.dart';
 
 class HomeState extends Equatable {
-  final isLoading;
+  final bool isLoading;
   final int nextPage;
   final List<Currency> currenciesList;
   final bool isLastPage;

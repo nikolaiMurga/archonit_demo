@@ -1,5 +1,5 @@
 import 'package:archonit_demo/data/network/requests/currencies_request.dart';
-import 'package:archonit_demo/data/repos/network_repo.dart';
+import 'package:archonit_demo/domain/repos/network_repo.dart';
 import 'package:archonit_demo/domain/models/paginated_currencies.dart';
 
 class CurrencyUseCase {

@@ -7,14 +7,16 @@ import 'package:archonit_demo/data/network/requests/currencies_request.dart';
 import 'package:archonit_demo/data/network/responses/currencies_response.dart';
 import 'package:archonit_demo/domain/models/currency.dart';
 import 'package:archonit_demo/domain/models/paginated_currencies.dart';
+import 'package:archonit_demo/domain/repos/network_repo.dart';
 
-class NetworkRepo {
+class NetworkRepoImpl implements NetworkRepo {
   final ApiClient _apiClient;
   final CurrencyMapper _currencyMapper;
   final Params _params;
 
-  NetworkRepo(this._apiClient, this._currencyMapper, this._params);
+  NetworkRepoImpl(this._apiClient, this._currencyMapper, this._params);
 
+  @override
   Future<PaginatedCurrencies> fetchCurrenciesResponse({required CurrenciesRequest request}) async {
     final queryParams = _params.getCurrenciesRequestQueryParams(request: request);
     final data = await _apiClient.get(endpoint: Endpoints.fetchAssets, queryParams: queryParams);

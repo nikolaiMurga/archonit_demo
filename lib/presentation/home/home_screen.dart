@@ -1,4 +1,4 @@
-import 'package:archonit_demo/app/auto_router.dart';
+import 'package:archonit_demo/core/auto_router.dart';
 import 'package:archonit_demo/domain/mixins/snack_bar_mixin.dart';
 import 'package:archonit_demo/presentation/common/widgets/currency_card.dart';
 import 'package:archonit_demo/presentation/common/widgets/loading_indicator.dart';
@@ -55,8 +55,8 @@ class _HomeScreenState extends State<HomeScreen> with SnackBarMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppStrings.currencies),
-        actions: [IconButton(onPressed: () => context.router.push(const FavoritesRoute()), icon: Icon(Icons.favorite))],
+        title: const Text(AppStrings.currencies),
+        actions: [IconButton(onPressed: () => context.router.push(const FavoritesRoute()), icon: const Icon(Icons.favorite))],
       ),
       body: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {
