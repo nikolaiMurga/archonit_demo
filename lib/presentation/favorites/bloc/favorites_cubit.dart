@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,44 +10,42 @@ part 'favorites_state.dart';
 
 class FavoritesCubit extends Cubit<FavoritesState> {
   final FavoritesUseCase _favoritesUseCase;
+  StreamSubscription<List<Currency>>? _favoritesSubscription;
 
   FavoritesCubit(this._favoritesUseCase) : super(const FavoritesState(favoritesList: [])) {
-    loadFavoritesCurrenciesList();
+    _subscribeToFavorites();
   }
 
-  void loadFavoritesCurrenciesList() {
-    emit(FavoritesState(isLoading: true, favoritesList: state.favoritesList));
-    final loadedList = _favoritesUseCase.loadFavoriteCurrencies();
-    emit(FavoritesState(favoritesList: loadedList));
+  void _subscribeToFavorites() {
+    emit(FavoritesState(isLoading: true, favoritesList: [...state.favoritesList]));
+
+    _favoritesSubscription = _favoritesUseCase.favoritesStream.listen(
+          (updatedList) {
+        emit(FavoritesState(favoritesList: [...updatedList]));
+      },
+      onError: (e) {
+        emit(FavoritesState(favoritesList: state.favoritesList, error: ErrorModel(message: e.toString())));
+      },
+    );
+
+    final initialList = _favoritesUseCase.currentFavorites;
+    emit(FavoritesState(favoritesList: [...initialList]));
   }
 
   Future<void> updateFavoriteCurrencies({required Currency currency}) async {
-    // check if model is in favorites
-    final isModelInFavorites = state.favoritesList.contains(currency);
-    if (isModelInFavorites) {
-      // if model is in favorites remove model
-      final updatedList = state.favoritesList.where((curr) => curr != currency).toList();
-      // cache updated list without model
-      await _favoritesUseCase.saveFavoritesCurrencies(list: updatedList);
-      // update state
-      emit(FavoritesState(favoritesList: updatedList));
-    } else {
-      // if no, save model to favorites
-      final updatedList = [...state.favoritesList, currency];
-      try {
-        // cached favorites list
-        await _favoritesUseCase.saveFavoritesCurrencies(list: state.favoritesList);
-        emit(FavoritesState(favoritesList: updatedList));
-      } catch (e) {
-        emit(
-          FavoritesState(
-            favoritesList: state.favoritesList,
-            error: ErrorModel(message: e.toString()),
-          ),
-        );
-      }
+    try {
+      await _favoritesUseCase.toggleFavorite(currency);
+    } catch (e) {
+      emit(FavoritesState(
+        favoritesList: state.favoritesList,
+        error: ErrorModel(message: e.toString()),
+      ));
     }
   }
 
-  bool isFavorite(Currency curr) => state.favoritesList.contains(curr);
+  @override
+  Future<void> close() {
+    _favoritesSubscription?.cancel();
+    return super.close();
+  }
 }

@@ -1,15 +1,18 @@
-import 'package:archonit_demo/domain/models/currency.dart';
-import 'package:archonit_demo/presentation/favorites/bloc/favorites_cubit.dart';
-import 'package:archonit_demo/resources/app_test_styles.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../core/injection.dart';
+import '../../../domain/models/currency.dart';
+import '../../../domain/use_cases/favorites_use_case.dart';
+import '../../../resources/app_test_styles.dart';
+import 'favorite_status_builder.dart';
 
 class CurrencyCard extends StatelessWidget {
   final Currency currency;
 
   const CurrencyCard({super.key, required this.currency});
 
-  void _showContextMenu(BuildContext context, Offset position, bool isFavorite, VoidCallback updateFavorite) async {
+  void _showContextMenu(BuildContext context, Offset position, bool isFavorite) async {
     final RenderBox overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
     final result = await showMenu(
       context: context,
@@ -29,23 +32,20 @@ class CurrencyCard extends StatelessWidget {
       elevation: 8,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     );
-    if (result == 'favorite') updateFavorite();
+    if (result == 'favorite') {
+      await getIt<FavoritesUseCase>().toggleFavorite(currency);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final readCubit = context.read<FavoritesCubit>();
-    final watchCubit = context.watch<FavoritesCubit>();
+    final favoriteUseCase = getIt<FavoritesUseCase>();
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onLongPressStart: (details) {
-        _showContextMenu(
-          context,
-          details.globalPosition,
-          readCubit.state.favoritesList.contains(currency),
-          () async => await readCubit.updateFavoriteCurrencies(currency: currency),
-        );
+        final currentStatus = favoriteUseCase.isFavorite(currency);
+        _showContextMenu(context, details.globalPosition, currentStatus);
       },
       child: SizedBox(
         height: 84,
@@ -62,15 +62,15 @@ class CurrencyCard extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16.0),
                 child: Text(currency.symbol, style: AppTextStyles.text16w600),
               ),
-              Builder(
-                builder: (context) {
-                  final isFavorite = watchCubit.isFavorite(currency);
+              FavoriteStatusBuilder(
+                currency: currency,
+                builder: (isFavorite) {
                   return isFavorite
                       ? const Padding(padding: EdgeInsets.all(8.0), child: Icon(Icons.favorite, size: 12))
                       : const SizedBox.shrink();
                 },
               ),
-              const Expanded(child: SizedBox()),
+              const Spacer(),
               Text('\$${currency.priceUsd.toStringAsFixed(2)}', style: AppTextStyles.text16w600),
             ],
           ),

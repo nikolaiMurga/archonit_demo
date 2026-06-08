@@ -1,20 +1,47 @@
-import 'package:archonit_demo/data/repos/local_repo.dart';
-import 'package:archonit_demo/domain/models/currency.dart';
+import 'dart:async';
+
+import '../models/currency.dart';
+import '../repos/local_repo.dart';
 
 class FavoritesUseCase {
   final LocalRepo _localRepo;
 
-  FavoritesUseCase(this._localRepo);
+  final StreamController<List<Currency>> _controller = StreamController<List<Currency>>.broadcast();
+  List<Currency> _cachedFavorites = [];
 
-  Future<bool> saveFavoritesCurrencies({required List<Currency> list}) async {
-    return _localRepo.saveFavoriteCurrencies(list: list);
+  FavoritesUseCase(this._localRepo) {
+    _cachedFavorites = _localRepo.loadFavoriteCurrencies();
   }
 
-  List<Currency> loadFavoriteCurrencies() {
-    return _localRepo.loadFavoriteCurrencies();
+  Stream<List<Currency>> get favoritesStream => _controller.stream;
+
+  List<Currency> get currentFavorites => List<Currency>.from(_cachedFavorites);
+
+  bool isFavorite(Currency currency) => _cachedFavorites.any((curr) => curr.id == currency.id);
+
+  Stream<bool> isFavoriteStream(Currency currency) {
+    return _controller.stream.map((list) => list.any((curr) => curr.id == currency.id));
+  }
+
+  Future<void> toggleFavorite(Currency currency) async {
+    final isExist = _cachedFavorites.any((curr) => curr.id == currency.id);
+
+    final updatedList = isExist ? _cachedFavorites.where((curr) => curr.id != currency.id).toList() : [..._cachedFavorites, currency];
+
+    final success = await _localRepo.saveFavoriteCurrencies(list: updatedList);
+
+    if (success) {
+      _cachedFavorites = updatedList;
+      _controller.add([..._cachedFavorites]);
+    }
   }
 
   Future<bool> removeFavoriteCurrencies() async {
-    return _localRepo.removeFavoriteCurrencies();
+    final success = await _localRepo.removeFavoriteCurrencies();
+    if (success) {
+      _cachedFavorites = [];
+      _controller.add([]);
+    }
+    return success;
   }
 }

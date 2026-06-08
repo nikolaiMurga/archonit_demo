@@ -39,7 +39,7 @@ Future<void> setupDI() async {
 
   // use cases
   getIt.registerFactory<CurrencyUseCase>(() => CurrencyUseCase(getIt<NetworkRepo>()));
-  getIt.registerFactory<FavoritesUseCase>(() => FavoritesUseCase(getIt<LocalRepo>()));
+  getIt.registerSingleton<FavoritesUseCase>(FavoritesUseCase(getIt<LocalRepo>()));
 
   // blocs
   getIt.registerSingleton<HomeCubit>(HomeCubit(getIt<CurrencyUseCase>()));
