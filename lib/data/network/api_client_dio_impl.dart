@@ -1,4 +1,4 @@
-import 'package:archonit_demo/app/locator.dart';
+import 'package:archonit_demo/core/injection.dart';
 import 'package:archonit_demo/data/network/api_client.dart';
 import 'package:archonit_demo/data/network/endpoints.dart';
 import 'package:archonit_demo/data/network/params.dart';

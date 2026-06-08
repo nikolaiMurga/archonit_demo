@@ -1,12 +1,12 @@
-import 'package:archonit_demo/presentation/common/widgets/currency_card.dart';
-import 'package:archonit_demo/presentation/favorites/bloc/favorites_cubit.dart';
-import 'package:archonit_demo/presentation/common/widgets/empty_state_widget.dart';
-import 'package:archonit_demo/resources/app_strings.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../app/locator.dart';
+import '../../core/injection.dart';
+import '../../resources/app_strings.dart';
+import '../common/widgets/currency_card.dart';
+import '../common/widgets/empty_state_widget.dart';
+import 'bloc/favorites_cubit.dart';
 
 @RoutePage()
 class FavoritesScreen extends StatelessWidget {
@@ -15,7 +15,7 @@ class FavoritesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: BlocProvider.of<FavoritesCubit>(context),
+      value: getIt<FavoritesCubit>(),
       child: Scaffold(
         appBar: AppBar(title: const Text(AppStrings.favorites)),
         body: BlocBuilder<FavoritesCubit, FavoritesState>(

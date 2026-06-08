@@ -1,25 +1,15 @@
-import 'package:archonit_demo/app/locator.dart';
-import 'package:archonit_demo/archonit_demo_app.dart';
-import 'package:archonit_demo/presentation/favorites/bloc/favorites_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'presentation/home/bloc/home_cubit.dart';
+import 'archonit_demo_app.dart';
+import 'core/injection.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
-  await Locator().setup();
+  await setupDI();
   // for using hive as local storage uncomment this line
   // HivePersistenceService.instance.init();
 
-  runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider<HomeCubit>(create: (c) => getIt<HomeCubit>()),
-        BlocProvider<FavoritesCubit>(create: (c) => getIt<FavoritesCubit>()),
-      ],
-      child: const ArchonitDemoApp(),
-    ),
-  );
+  runApp(const ArchonitDemoApp());
 }

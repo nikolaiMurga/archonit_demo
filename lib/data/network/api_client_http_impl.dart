@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:archonit_demo/app/logging_service.dart';
+import 'package:archonit_demo/core/logging_service.dart';
 import 'package:archonit_demo/data/network/api_client.dart';
 import 'package:archonit_demo/data/network/endpoints.dart';
 import 'package:archonit_demo/data/network/params.dart';
@@ -21,8 +21,8 @@ class ApiClientHttpImpl implements ApiClient {
     stopwatch.stop();
     final elapsedTime = stopwatch.elapsedMilliseconds;
 
-    LogService.addLog('+/SERVER RESPONSE DELAY: $elapsedTime MILLISECONDS /+');
-    LogService.addLog('${response.statusCode} => ${response.reasonPhrase}');
+    LogService.printLog('+/SERVER RESPONSE DELAY: $elapsedTime MILLISECONDS /+');
+    LogService.printLog('${response.statusCode} => ${response.reasonPhrase}');
 
     String body = utf8.decode(response.bodyBytes);
     switch (response.statusCode) {
