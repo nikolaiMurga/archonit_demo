@@ -14,6 +14,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   void initialFetch() {
     emit(const HomeState(isLoading: true));
+    _currencyUseCase.resetPagination();
     fetchPaginatedCurrencies();
   }
 
