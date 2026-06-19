@@ -1,9 +1,9 @@
-import 'package:archonit_demo/data/network/requests/currencies_request.dart';
-import 'package:archonit_demo/domain/models/currency.dart';
-import 'package:archonit_demo/domain/models/error_model.dart';
-import 'package:archonit_demo/domain/use_cases/currency_use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../domain/models/currency.dart';
+import '../../../domain/models/error_model.dart';
+import '../../../domain/use_cases/currency_use_case.dart';
 
 part 'home_state.dart';
 
@@ -18,22 +18,20 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<void> fetchPaginatedCurrencies() async {
-    if (state.isLastPage) return;
+    if (_currencyUseCase.isLastPage) return;
+
     try {
-      final request = CurrenciesRequest(page: state.nextPage);
-      final paginatedCurrencies = await _currencyUseCase.fetchCurrencies(request: request);
-      if (paginatedCurrencies.currenciesList.isEmpty) {
-        emit(const HomeState());
-      } else {
-        final updatedList = [...state.currenciesList, ...paginatedCurrencies.currenciesList];
-        emit(HomeState(
-          currenciesList: updatedList,
-          nextPage: state.nextPage + 1,
-          isLastPage: state.nextPage == paginatedCurrencies.totalPages,
-        ));
-      }
+      final updatedList = await _currencyUseCase.fetchCurrencies();
+
+      emit(HomeState(
+        currenciesList: updatedList,
+        isLastPage: _currencyUseCase.isLastPage,
+      ));
     } on ErrorModel catch (e) {
-      emit(HomeState(errorMessage: e.message));
+      emit(HomeState(
+        currenciesList: state.currenciesList,
+        errorMessage: e.message,
+      ));
     }
   }
 }
