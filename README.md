@@ -1,4 +1,4 @@
-# archonit_demo
+# layer first arch demo project
 
 Test task demo project.
 
